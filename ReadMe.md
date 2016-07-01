@@ -12,4 +12,6 @@ This project is derived from [**objViewer**](https://github.com/CharlyZhang/objV
 	- **lib** : project compiling Application3D, including a target to create static lib (**libApplication3D**)
 	- **vendor** : the 3rd-party lib
 	- *3DViewer.xcodeproj* : project using **libApplication3D**
+	- **Application3DDemo** : similar as *3DViewer.xcodeproj*, used for developping lib
+	- *Application3D.xcworkspace* : workplace for developping lib
 	
