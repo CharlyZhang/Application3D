@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		2D525C9C1D265368006B22FE /* createLib */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2D525C9D1D265368006B22FE /* Build configuration list for PBXAggregateTarget "createLib" */;
+			buildPhases = (
+				2D525CA01D26536C006B22FE /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = createLib;
+			productName = createLib;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		2D525C7A1D265239006B22FE /* CZAnimaitonManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C541D265239006B22FE /* CZAnimaitonManager.cpp */; };
+		2D525C7B1D265239006B22FE /* CZAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C561D265239006B22FE /* CZAnimation.cpp */; };
+		2D525C7C1D265239006B22FE /* CZShapeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C581D265239006B22FE /* CZShapeAnimation.cpp */; };
+		2D525C7D1D265239006B22FE /* CZGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C5D1D265239006B22FE /* CZGeometry.cpp */; };
+		2D525C7E1D265239006B22FE /* CZMat4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C601D265239006B22FE /* CZMat4.cpp */; };
+		2D525C7F1D265239006B22FE /* CZNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C621D265239006B22FE /* CZNode.cpp */; };
+		2D525C801D265239006B22FE /* CZShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C641D265239006B22FE /* CZShader.cpp */; };
+		2D525C821D265239006B22FE /* CZUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C671D265239006B22FE /* CZUtil.mm */; };
+		2D525C831D265239006B22FE /* CZMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6A1D265239006B22FE /* CZMaterial.cpp */; };
+		2D525C841D265239006B22FE /* CZMaterialLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6C1D265239006B22FE /* CZMaterialLib.cpp */; };
+		2D525C851D265239006B22FE /* CZObjFileParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */; };
+		2D525C861D265239006B22FE /* CZObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C701D265239006B22FE /* CZObjModel.cpp */; };
+		2D525C871D265239006B22FE /* CZCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C731D265239006B22FE /* CZCube.cpp */; };
+		2D525C881D265239006B22FE /* Application3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C761D265239006B22FE /* Application3D.cpp */; };
+		2D525C891D265239006B22FE /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C791D265239006B22FE /* UIImage+Resize.m */; };
+		2D525C971D2652D6006B22FE /* glsl in Resources */ = {isa = PBXBuildFile; fileRef = 2D525C941D2652D6006B22FE /* glsl */; };
+		2D525C981D2652D6006B22FE /* scene_violin.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 2D525C951D2652D6006B22FE /* scene_violin.cfg */; };
+		2D525C991D2652D6006B22FE /* scene.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 2D525C961D2652D6006B22FE /* scene.cfg */; };
+		2D525C9B1D265344006B22FE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D525C9A1D265344006B22FE /* OpenGLES.framework */; };
+		2D525CA11D2653E7006B22FE /* Application3D.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C771D265239006B22FE /* Application3D.h */; };
+		2D525CA21D2653E7006B22FE /* CZAnimaitonManager.hpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C551D265239006B22FE /* CZAnimaitonManager.hpp */; };
+		2D525CA31D2653E7006B22FE /* CZAnimation.hpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C571D265239006B22FE /* CZAnimation.hpp */; };
+		2D525CA41D2653E7006B22FE /* CZShapeAnimation.hpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C591D265239006B22FE /* CZShapeAnimation.hpp */; };
+		2D525CA51D2653E7006B22FE /* CZBasic.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C5B1D265239006B22FE /* CZBasic.h */; };
+		2D525CA61D2653E7006B22FE /* CZDefine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C5C1D265239006B22FE /* CZDefine.h */; };
+		2D525CA71D2653E7006B22FE /* CZGeometry.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C5E1D265239006B22FE /* CZGeometry.h */; };
+		2D525CA81D2653E7006B22FE /* CZLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C5F1D265239006B22FE /* CZLog.h */; };
+		2D525CA91D2653E7006B22FE /* CZMat4.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C611D265239006B22FE /* CZMat4.h */; };
+		2D525CAA1D2653E7006B22FE /* CZNode.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C631D265239006B22FE /* CZNode.h */; };
+		2D525CAB1D2653E7006B22FE /* CZShader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C651D265239006B22FE /* CZShader.h */; };
+		2D525CAC1D2653E7006B22FE /* CZVector.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C681D265239006B22FE /* CZVector.h */; };
+		2D525CAD1D2653E7006B22FE /* CZMaterial.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6B1D265239006B22FE /* CZMaterial.h */; };
+		2D525CAE1D2653E7006B22FE /* CZMaterialLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6D1D265239006B22FE /* CZMaterialLib.h */; };
+		2D525CAF1D2653E7006B22FE /* CZObjFileParser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6F1D265239006B22FE /* CZObjFileParser.h */; };
+		2D525CB01D2653E7006B22FE /* CZObjModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C711D265239006B22FE /* CZObjModel.h */; };
+		2D525CB11D2653E7006B22FE /* CZShape.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C751D265239006B22FE /* CZShape.h */; };
+		2D525CB21D2653E7006B22FE /* UIImage+Resize.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C781D265239006B22FE /* UIImage+Resize.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2D525C431D2651B2006B22FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = include;
+			dstSubfolderSpec = 16;
+			files = (
+				2D525CA11D2653E7006B22FE /* Application3D.h in CopyFiles */,
+				2D525CA21D2653E7006B22FE /* CZAnimaitonManager.hpp in CopyFiles */,
+				2D525CA31D2653E7006B22FE /* CZAnimation.hpp in CopyFiles */,
+				2D525CA41D2653E7006B22FE /* CZShapeAnimation.hpp in CopyFiles */,
+				2D525CA51D2653E7006B22FE /* CZBasic.h in CopyFiles */,
+				2D525CA61D2653E7006B22FE /* CZDefine.h in CopyFiles */,
+				2D525CA71D2653E7006B22FE /* CZGeometry.h in CopyFiles */,
+				2D525CA81D2653E7006B22FE /* CZLog.h in CopyFiles */,
+				2D525CA91D2653E7006B22FE /* CZMat4.h in CopyFiles */,
+				2D525CAA1D2653E7006B22FE /* CZNode.h in CopyFiles */,
+				2D525CAB1D2653E7006B22FE /* CZShader.h in CopyFiles */,
+				2D525CAC1D2653E7006B22FE /* CZVector.h in CopyFiles */,
+				2D525CAD1D2653E7006B22FE /* CZMaterial.h in CopyFiles */,
+				2D525CAE1D2653E7006B22FE /* CZMaterialLib.h in CopyFiles */,
+				2D525CAF1D2653E7006B22FE /* CZObjFileParser.h in CopyFiles */,
+				2D525CB01D2653E7006B22FE /* CZObjModel.h in CopyFiles */,
+				2D525CB11D2653E7006B22FE /* CZShape.h in CopyFiles */,
+				2D525CB21D2653E7006B22FE /* UIImage+Resize.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2D525C451D2651B2006B22FE /* libApplication3D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libApplication3D.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D525C541D265239006B22FE /* CZAnimaitonManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZAnimaitonManager.cpp; sourceTree = "<group>"; };
+		2D525C551D265239006B22FE /* CZAnimaitonManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZAnimaitonManager.hpp; sourceTree = "<group>"; };
+		2D525C561D265239006B22FE /* CZAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZAnimation.cpp; sourceTree = "<group>"; };
+		2D525C571D265239006B22FE /* CZAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZAnimation.hpp; sourceTree = "<group>"; };
+		2D525C581D265239006B22FE /* CZShapeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZShapeAnimation.cpp; sourceTree = "<group>"; };
+		2D525C591D265239006B22FE /* CZShapeAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZShapeAnimation.hpp; sourceTree = "<group>"; };
+		2D525C5B1D265239006B22FE /* CZBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZBasic.h; sourceTree = "<group>"; };
+		2D525C5C1D265239006B22FE /* CZDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZDefine.h; sourceTree = "<group>"; };
+		2D525C5D1D265239006B22FE /* CZGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZGeometry.cpp; sourceTree = "<group>"; };
+		2D525C5E1D265239006B22FE /* CZGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZGeometry.h; sourceTree = "<group>"; };
+		2D525C5F1D265239006B22FE /* CZLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZLog.h; sourceTree = "<group>"; };
+		2D525C601D265239006B22FE /* CZMat4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZMat4.cpp; sourceTree = "<group>"; };
+		2D525C611D265239006B22FE /* CZMat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZMat4.h; sourceTree = "<group>"; };
+		2D525C621D265239006B22FE /* CZNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZNode.cpp; sourceTree = "<group>"; };
+		2D525C631D265239006B22FE /* CZNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZNode.h; sourceTree = "<group>"; };
+		2D525C641D265239006B22FE /* CZShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZShader.cpp; sourceTree = "<group>"; };
+		2D525C651D265239006B22FE /* CZShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZShader.h; sourceTree = "<group>"; };
+		2D525C671D265239006B22FE /* CZUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CZUtil.mm; sourceTree = "<group>"; };
+		2D525C681D265239006B22FE /* CZVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZVector.h; sourceTree = "<group>"; };
+		2D525C6A1D265239006B22FE /* CZMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZMaterial.cpp; sourceTree = "<group>"; };
+		2D525C6B1D265239006B22FE /* CZMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZMaterial.h; sourceTree = "<group>"; };
+		2D525C6C1D265239006B22FE /* CZMaterialLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZMaterialLib.cpp; sourceTree = "<group>"; };
+		2D525C6D1D265239006B22FE /* CZMaterialLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZMaterialLib.h; sourceTree = "<group>"; };
+		2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZObjFileParser.cpp; sourceTree = "<group>"; };
+		2D525C6F1D265239006B22FE /* CZObjFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZObjFileParser.h; sourceTree = "<group>"; };
+		2D525C701D265239006B22FE /* CZObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZObjModel.cpp; sourceTree = "<group>"; };
+		2D525C711D265239006B22FE /* CZObjModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZObjModel.h; sourceTree = "<group>"; };
+		2D525C731D265239006B22FE /* CZCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZCube.cpp; sourceTree = "<group>"; };
+		2D525C741D265239006B22FE /* CZCube.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZCube.hpp; sourceTree = "<group>"; };
+		2D525C751D265239006B22FE /* CZShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZShape.h; sourceTree = "<group>"; };
+		2D525C761D265239006B22FE /* Application3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application3D.cpp; path = ../../src/Application3D.cpp; sourceTree = "<group>"; };
+		2D525C771D265239006B22FE /* Application3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application3D.h; path = ../../src/Application3D.h; sourceTree = "<group>"; };
+		2D525C781D265239006B22FE /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../../src/UIImage+Resize.h"; sourceTree = "<group>"; };
+		2D525C791D265239006B22FE /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../../src/UIImage+Resize.m"; sourceTree = "<group>"; };
+		2D525C8E1D2652C3006B22FE /* Application3DResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Application3DResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D525C901D2652C3006B22FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2D525C941D2652D6006B22FE /* glsl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = glsl; path = ../../resource/glsl; sourceTree = "<group>"; };
+		2D525C951D2652D6006B22FE /* scene_violin.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene_violin.cfg; path = ../../resource/scene_violin.cfg; sourceTree = "<group>"; };
+		2D525C961D2652D6006B22FE /* scene.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene.cfg; path = ../../resource/scene.cfg; sourceTree = "<group>"; };
+		2D525C9A1D265344006B22FE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2D525C421D2651B2006B22FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D525C9B1D265344006B22FE /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D525C8B1D2652C3006B22FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D525C3C1D2651B2006B22FE = {
+			isa = PBXGroup;
+			children = (
+				2D525C9A1D265344006B22FE /* OpenGLES.framework */,
+				2D525C521D2651F6006B22FE /* src */,
+				2D525C511D2651EB006B22FE /* resources */,
+				2D525C8F1D2652C3006B22FE /* Application3DResources */,
+				2D525C461D2651B2006B22FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2D525C461D2651B2006B22FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C451D2651B2006B22FE /* libApplication3D.a */,
+				2D525C8E1D2652C3006B22FE /* Application3DResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2D525C511D2651EB006B22FE /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C941D2652D6006B22FE /* glsl */,
+				2D525C951D2652D6006B22FE /* scene_violin.cfg */,
+				2D525C961D2652D6006B22FE /* scene.cfg */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		2D525C521D2651F6006B22FE /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C761D265239006B22FE /* Application3D.cpp */,
+				2D525C771D265239006B22FE /* Application3D.h */,
+				2D525C531D265239006B22FE /* animation */,
+				2D525C5A1D265239006B22FE /* basic */,
+				2D525C691D265239006B22FE /* objModel */,
+				2D525C721D265239006B22FE /* shape */,
+				2D525C781D265239006B22FE /* UIImage+Resize.h */,
+				2D525C791D265239006B22FE /* UIImage+Resize.m */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		2D525C531D265239006B22FE /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C541D265239006B22FE /* CZAnimaitonManager.cpp */,
+				2D525C551D265239006B22FE /* CZAnimaitonManager.hpp */,
+				2D525C561D265239006B22FE /* CZAnimation.cpp */,
+				2D525C571D265239006B22FE /* CZAnimation.hpp */,
+				2D525C581D265239006B22FE /* CZShapeAnimation.cpp */,
+				2D525C591D265239006B22FE /* CZShapeAnimation.hpp */,
+			);
+			name = animation;
+			path = ../../src/animation;
+			sourceTree = "<group>";
+		};
+		2D525C5A1D265239006B22FE /* basic */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C5B1D265239006B22FE /* CZBasic.h */,
+				2D525C5C1D265239006B22FE /* CZDefine.h */,
+				2D525C5D1D265239006B22FE /* CZGeometry.cpp */,
+				2D525C5E1D265239006B22FE /* CZGeometry.h */,
+				2D525C5F1D265239006B22FE /* CZLog.h */,
+				2D525C601D265239006B22FE /* CZMat4.cpp */,
+				2D525C611D265239006B22FE /* CZMat4.h */,
+				2D525C621D265239006B22FE /* CZNode.cpp */,
+				2D525C631D265239006B22FE /* CZNode.h */,
+				2D525C641D265239006B22FE /* CZShader.cpp */,
+				2D525C651D265239006B22FE /* CZShader.h */,
+				2D525C671D265239006B22FE /* CZUtil.mm */,
+				2D525C681D265239006B22FE /* CZVector.h */,
+			);
+			name = basic;
+			path = ../../src/basic;
+			sourceTree = "<group>";
+		};
+		2D525C691D265239006B22FE /* objModel */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C6A1D265239006B22FE /* CZMaterial.cpp */,
+				2D525C6B1D265239006B22FE /* CZMaterial.h */,
+				2D525C6C1D265239006B22FE /* CZMaterialLib.cpp */,
+				2D525C6D1D265239006B22FE /* CZMaterialLib.h */,
+				2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */,
+				2D525C6F1D265239006B22FE /* CZObjFileParser.h */,
+				2D525C701D265239006B22FE /* CZObjModel.cpp */,
+				2D525C711D265239006B22FE /* CZObjModel.h */,
+			);
+			name = objModel;
+			path = ../../src/objModel;
+			sourceTree = "<group>";
+		};
+		2D525C721D265239006B22FE /* shape */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C731D265239006B22FE /* CZCube.cpp */,
+				2D525C741D265239006B22FE /* CZCube.hpp */,
+				2D525C751D265239006B22FE /* CZShape.h */,
+			);
+			name = shape;
+			path = ../../src/shape;
+			sourceTree = "<group>";
+		};
+		2D525C8F1D2652C3006B22FE /* Application3DResources */ = {
+			isa = PBXGroup;
+			children = (
+				2D525C901D2652C3006B22FE /* Info.plist */,
+			);
+			path = Application3DResources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2D525C441D2651B2006B22FE /* Application3D */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D525C4E1D2651B2006B22FE /* Build configuration list for PBXNativeTarget "Application3D" */;
+			buildPhases = (
+				2D525C411D2651B2006B22FE /* Sources */,
+				2D525C421D2651B2006B22FE /* Frameworks */,
+				2D525C431D2651B2006B22FE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Application3D;
+			productName = Application3D;
+			productReference = 2D525C451D2651B2006B22FE /* libApplication3D.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		2D525C8D1D2652C3006B22FE /* Application3DResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D525C911D2652C3006B22FE /* Build configuration list for PBXNativeTarget "Application3DResources" */;
+			buildPhases = (
+				2D525C8A1D2652C3006B22FE /* Sources */,
+				2D525C8B1D2652C3006B22FE /* Frameworks */,
+				2D525C8C1D2652C3006B22FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Application3DResources;
+			productName = Application3DResources;
+			productReference = 2D525C8E1D2652C3006B22FE /* Application3DResources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2D525C3D1D2651B2006B22FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = CharlyZhang;
+				TargetAttributes = {
+					2D525C441D2651B2006B22FE = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7NC252WH29;
+					};
+					2D525C8D1D2652C3006B22FE = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					2D525C9C1D265368006B22FE = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7NC252WH29;
+					};
+				};
+			};
+			buildConfigurationList = 2D525C401D2651B2006B22FE /* Build configuration list for PBXProject "Application3D" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2D525C3C1D2651B2006B22FE;
+			productRefGroup = 2D525C461D2651B2006B22FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2D525C441D2651B2006B22FE /* Application3D */,
+				2D525C8D1D2652C3006B22FE /* Application3DResources */,
+				2D525C9C1D265368006B22FE /* createLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2D525C8C1D2652C3006B22FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D525C981D2652D6006B22FE /* scene_violin.cfg in Resources */,
+				2D525C991D2652D6006B22FE /* scene.cfg in Resources */,
+				2D525C971D2652D6006B22FE /* glsl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D525CA01D26536C006B22FE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=build/${CONFIGURATION}\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target Application3D ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target Application3D -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 -arch x86_64  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target Application3DResources -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}Resources.bundle\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2D525C411D2651B2006B22FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D525C7D1D265239006B22FE /* CZGeometry.cpp in Sources */,
+				2D525C7A1D265239006B22FE /* CZAnimaitonManager.cpp in Sources */,
+				2D525C801D265239006B22FE /* CZShader.cpp in Sources */,
+				2D525C881D265239006B22FE /* Application3D.cpp in Sources */,
+				2D525C861D265239006B22FE /* CZObjModel.cpp in Sources */,
+				2D525C7B1D265239006B22FE /* CZAnimation.cpp in Sources */,
+				2D525C871D265239006B22FE /* CZCube.cpp in Sources */,
+				2D525C7C1D265239006B22FE /* CZShapeAnimation.cpp in Sources */,
+				2D525C821D265239006B22FE /* CZUtil.mm in Sources */,
+				2D525C891D265239006B22FE /* UIImage+Resize.m in Sources */,
+				2D525C7F1D265239006B22FE /* CZNode.cpp in Sources */,
+				2D525C841D265239006B22FE /* CZMaterialLib.cpp in Sources */,
+				2D525C851D265239006B22FE /* CZObjFileParser.cpp in Sources */,
+				2D525C7E1D265239006B22FE /* CZMat4.cpp in Sources */,
+				2D525C831D265239006B22FE /* CZMaterial.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D525C8A1D2652C3006B22FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2D525C4C1D2651B2006B22FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2D525C4D1D2651B2006B22FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2D525C4F1D2651B2006B22FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		2D525C501D2651B2006B22FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		2D525C921D2652C3006B22FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Application3DResources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CharlyZhang.Application3DResources;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		2D525C931D2652C3006B22FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Application3DResources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CharlyZhang.Application3DResources;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		2D525C9E1D265368006B22FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2D525C9F1D265368006B22FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D525C401D2651B2006B22FE /* Build configuration list for PBXProject "Application3D" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D525C4C1D2651B2006B22FE /* Debug */,
+				2D525C4D1D2651B2006B22FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D525C4E1D2651B2006B22FE /* Build configuration list for PBXNativeTarget "Application3D" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D525C4F1D2651B2006B22FE /* Debug */,
+				2D525C501D2651B2006B22FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D525C911D2652C3006B22FE /* Build configuration list for PBXNativeTarget "Application3DResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D525C921D2652C3006B22FE /* Debug */,
+				2D525C931D2652C3006B22FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2D525C9D1D265368006B22FE /* Build configuration list for PBXAggregateTarget "createLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D525C9E1D265368006B22FE /* Debug */,
+				2D525C9F1D265368006B22FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2D525C3D1D2651B2006B22FE /* Project object */;
+}
