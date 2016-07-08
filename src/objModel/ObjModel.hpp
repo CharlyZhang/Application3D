@@ -12,12 +12,14 @@
 #include "../basic/CZVector.h"
 #include "../basic/CZGeometry.h"
 #include "CZMaterialLib.h"
-
 #include <vector>
+
+class ObjLoader;
 
 class ObjModel
 {
 public:
+    friend class ObjLoader;
     ObjModel();
     ~ObjModel();
     
