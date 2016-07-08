@@ -19,7 +19,7 @@ bool ObjLoader::load(CZObjModel *objModel, std::string &filename)
         return false;
     }
     
-    return objModel->load(filename);
+    return objModel->parseFile(filename);
 }
 
 bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &filename)

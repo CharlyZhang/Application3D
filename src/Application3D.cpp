@@ -100,7 +100,7 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 
 
 	/// config scene
-	if(!load(sceneFilename))
+	if(!parseFile(sceneFilename))
 	{
 		scene.eyePosition = CZPoint3D(0, 0, 100);
 		scene.cameraFov = 45.f;

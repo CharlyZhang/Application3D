@@ -14,17 +14,17 @@ CZObjModel::~CZObjModel()
 	
 }
 
-bool CZObjModel::load(const string& path)
+bool CZObjModel::parseFile(const string& path)
 {
 	LOG_INFO("Parsing %s ...\n", path.c_str());
     
-	if(CZObjFileParser::load(path) == false) return false;
+	if(CZObjFileParser::parseFile(path) == false) return false;
     
     unpackRawData();
     transform2GCard();
     
     /// load material lib
-    materialLib.load(curDirPath + "/" + mtlLibName);
+    materialLib.parseFile(curDirPath + "/" + mtlLibName);
 
 	clearRawData();
 

@@ -21,8 +21,8 @@ class CZObjFileParser
 {
 public:
 	/// \note: the 'process showing' part is not thread-safe, for usage of static variables
-	virtual bool load(const std::string& path);
-	bool load(const char* path);
+	virtual bool parseFile(const std::string& path);
+	bool parseFile(const char* path);
 
 protected:
 	//@param is file stream, which is used fetch valid data (without prefix)

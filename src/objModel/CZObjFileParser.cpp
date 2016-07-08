@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool CZObjFileParser::load(const string& path)
+bool CZObjFileParser::parseFile(const string& path)
 {
 	ifstream ifs(path.c_str(), ios::in | ios::ate);
 	if (!ifs)
@@ -48,7 +48,7 @@ bool CZObjFileParser::load(const string& path)
 	return true;
 }
 
-bool CZObjFileParser::load(const char *filename)
+bool CZObjFileParser::parseFile(const char *filename)
 {
 	if(filename == NULL)
 	{
@@ -57,7 +57,7 @@ bool CZObjFileParser::load(const char *filename)
 	}
 	
 	string strFilename(filename);
-	return load(strFilename);
+	return parseFile(strFilename);
 }
 
 void CZObjFileParser::skipLine(ifstream& is)

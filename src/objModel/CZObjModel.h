@@ -20,7 +20,7 @@ public:
 	CZObjModel();
 	~CZObjModel();
 
-	bool load(const std::string& path) override;
+	bool parseFile(const std::string& path) override;
     bool loadBinary(const std::string& path, const char *originalPath = NULL);
     bool saveAsBinary(const std::string& path);
 
