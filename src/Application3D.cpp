@@ -3,6 +3,7 @@
 #include "CZGeometry.h"
 #include "shape/CZShape.h"
 #include "shape/CZCube.hpp"
+#include "ModelFactory.hpp"
 #include "CZLog.h"
 #include <ctime>
 #include <vector>
@@ -121,16 +122,15 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 	return true;
 }
 
+#define DEBUG
 bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true */)
 {
-	if(filename == NULL) 
-	{
-		LOG_ERROR("filename is NULL\n");
-		return false;
-	}
+	CZObjModel *pModel = nullptr;
 
-	CZObjModel *pModel = new CZObjModel;
-
+#ifdef DEBUG
+    quickLoad = false;
+#endif
+    
 	bool success = false;
 	string strFileName(filename);
 	string tempFileName = strFileName + ".b";
@@ -142,12 +142,22 @@ bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true 
 		tempFileName = string(documentDirectory) + "/" + name;
 	}
 
-	if (!quickLoad || !pModel->loadBinary(tempFileName,filename))
+    if(quickLoad)
+        pModel = ModelFactory::createObjModelFromTemp(tempFileName.c_str());
+    
+    if(pModel == nullptr)
 	{
-		success = pModel->load(strFileName);
-		if(success && quickLoad)
+        pModel = ModelFactory::createObjModel(filename);
+		
+		if(pModel && quickLoad)
 			pModel->saveAsBinary(tempFileName);
 	}
+    
+    if(pModel == nullptr)
+    {
+        LOG_ERROR("obj model created failed!\n");
+        return false;
+    }
 
     rootNode.addSubNode(strFileName, pModel);
 

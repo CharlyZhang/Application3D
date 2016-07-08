@@ -8,28 +8,10 @@ using namespace std;
 CZObjModel::CZObjModel(): CZNode(kObjModel)
 {
 	pCurGeometry = NULL;
-    mtlLibName = "Not Set";
 }
 CZObjModel::~CZObjModel()
 {
-	// geometry
-	for (vector<CZGeometry*>::iterator itr = geometries.begin(); itr != geometries.end(); itr++)
-	{
-		delete *itr;
-	}
-	geometries.clear();
-    vector<CZGeometry*> temp;
-    geometries.swap(temp);
-
-	clearRawData();
-    vector<CZVector3D<float>> temp1;
-    vector<CZVector2D<float>> temp2;
-    positions.clear();
-    positions.swap(temp1);
-    normals.clear();
-    normals.swap(temp1);
-    texcoords.clear();
-    texcoords.swap(temp2);
+	
 }
 
 bool CZObjModel::load(const string& path)
@@ -39,6 +21,7 @@ bool CZObjModel::load(const string& path)
 	if(CZObjFileParser::load(path) == false) return false;
     
     unpackRawData();
+    transform2GCard();
     
     /// load material lib
     materialLib.load(curDirPath + "/" + mtlLibName);
@@ -245,39 +228,7 @@ bool CZObjModel::loadBinary(const std::string& path,const char *originalPath/*  
 
     fclose(fp);
     
-    // transform to graphic card
-    
-    // vao
-    GL_GEN_VERTEXARRAY(1, &m_vao);
-    GL_BIND_VERTEXARRAY(m_vao);
-    
-    // vertex
-    glGenBuffers(1, &m_vboPos);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboPos);
-    glBufferData(GL_ARRAY_BUFFER,positions.size() * 3 * sizeof(GLfloat), positions.data(), GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    CZCheckGLError();
-    
-    // normal
-    glGenBuffers(1, &m_vboNorm);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboNorm);
-    glBufferData(GL_ARRAY_BUFFER, normals.size() * 3 * sizeof(GLfloat), normals.data(), GL_STATIC_DRAW);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    CZCheckGLError();
-    
-    // texcoord
-    glGenBuffers(1, &m_vboTexCoord);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboTexCoord);
-    glBufferData(GL_ARRAY_BUFFER, texcoords.size() * 2 * sizeof(GLfloat), texcoords.data(), GL_STATIC_DRAW);
-    CZCheckGLError();
-    
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    GL_BIND_VERTEXARRAY(0);
-    CZCheckGLError();
+    transform2GCard();
     
     return true;
 }
@@ -342,43 +293,8 @@ bool CZObjModel::draw(CZShader* pShader, CZMat4 &viewProjMat)
     return true;
 }
 
-
-void CZObjModel::clearRawData()
+void CZObjModel::transform2GCard()
 {
-	/*free memory£º
-	 *£¨link£ºhttp://www.cppblog.com/lanshengsheng/archive/2013/03/04/198198.html£©
-	 */
-
-	m_vertRawVector.clear();
-    vector<CZVector3D<float>> temp3D;
-    vector<CZVector2D<float>> temp2D;
-	m_vertRawVector.swap(temp3D);
-
-	m_texRawVector.clear();
-	m_texRawVector.swap(temp2D);
-
-	m_normRawVector.clear();
-	m_normRawVector.swap(temp3D);
-}
-
-void CZObjModel::unpackRawData()
-{
-    positions.clear();
-    normals.clear();
-    texcoords.clear();
-    
-    long totalVertNum = 0;
-    for (vector<CZGeometry*>::iterator itr = geometries.begin(); itr != geometries.end(); itr++)
-    {
-        CZGeometry *pGeometry = (*itr);
-        long vertNum = pGeometry->unpackRawData(m_vertRawVector, m_normRawVector, m_texRawVector, \
-                          positions,normals,texcoords);
-        pGeometry->firstIdx = totalVertNum;
-        totalVertNum += vertNum;
-    }
-    
-    // transform to graphic card
-    
     // vao
     GL_GEN_VERTEXARRAY(1, &m_vao);
     GL_BIND_VERTEXARRAY(m_vao);

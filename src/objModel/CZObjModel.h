@@ -11,17 +11,10 @@
 #include "CZShader.h"
 #include "CZMat4.h"
 #include "CZNode.h"
-
-/// file type
-typedef enum _ObjFileType {
-	kNavteqObj,
-	kNormalObj,
-	kMqo
-} ObjFileType;
-
+#include "ObjModel.hpp"
 
 /// CZObjModel
-class CZObjModel : public CZObjFileParser, public CZNode
+class CZObjModel : public ObjModel, public CZObjFileParser, public CZNode
 {
 public:
 	CZObjModel();
@@ -30,10 +23,6 @@ public:
 	bool load(const std::string& path) override;
     bool loadBinary(const std::string& path, const char *originalPath = NULL);
     bool saveAsBinary(const std::string& path);
-
-	/// clear raw data of obj model to save memory,
-	///    which also cause `unpack` is useless in RENDER mode.
-	void clearRaw();
 
 	bool draw(CZShader *pShader, CZMat4 &viewProjMat) override;
 
@@ -45,22 +34,9 @@ private:
 	void parseVertexNormal(std::ifstream &ifs);		//vn <x> <y> <z>
 	void parseVertexTexCoord(std::ifstream &ifs);	//vt <u> <v>
 	void parseFace(std::ifstream &ifs);				//f <v/vt/vn <v/vt/vn> <v/vt/vn> 
-	
-	void clearRawData();
-    void unpackRawData();
 
-	// raw data
-	std::vector<CZVector3D<float>> m_vertRawVector;
-	std::vector<CZVector3D<float>> m_normRawVector;
-    std::vector<CZVector2D<float>> m_texRawVector;
+    void transform2GCard();
     
-    std::vector<CZVector3D<float> > positions;
-    std::vector<CZVector3D<float> > normals;
-    std::vector<CZVector2D<float> > texcoords;
-
 	CZGeometry *pCurGeometry;
-	std::vector<CZGeometry*> geometries;
-	CZMaterialLib materialLib;
-	std::string mtlLibName;							///< material lib name
 };
 #endif

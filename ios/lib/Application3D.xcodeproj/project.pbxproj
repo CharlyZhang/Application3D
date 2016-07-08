@@ -58,6 +58,9 @@
 		2D525CB01D2653E7006B22FE /* CZObjModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C711D265239006B22FE /* CZObjModel.h */; };
 		2D525CB11D2653E7006B22FE /* CZShape.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C751D265239006B22FE /* CZShape.h */; };
 		2D525CB21D2653E7006B22FE /* UIImage+Resize.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C781D265239006B22FE /* UIImage+Resize.h */; };
+		2DA38F3D1D2F75160044AE42 /* ModelFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */; };
+		2DA38F401D2F7F120044AE42 /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */; };
+		2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,8 +103,8 @@
 		2D525C591D265239006B22FE /* CZShapeAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZShapeAnimation.hpp; sourceTree = "<group>"; };
 		2D525C5B1D265239006B22FE /* CZBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZBasic.h; sourceTree = "<group>"; };
 		2D525C5C1D265239006B22FE /* CZDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZDefine.h; sourceTree = "<group>"; };
-		2D525C5D1D265239006B22FE /* CZGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZGeometry.cpp; sourceTree = "<group>"; };
-		2D525C5E1D265239006B22FE /* CZGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZGeometry.h; sourceTree = "<group>"; };
+		2D525C5D1D265239006B22FE /* CZGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CZGeometry.cpp; path = ../basic/CZGeometry.cpp; sourceTree = "<group>"; };
+		2D525C5E1D265239006B22FE /* CZGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CZGeometry.h; path = ../basic/CZGeometry.h; sourceTree = "<group>"; };
 		2D525C5F1D265239006B22FE /* CZLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZLog.h; sourceTree = "<group>"; };
 		2D525C601D265239006B22FE /* CZMat4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZMat4.cpp; sourceTree = "<group>"; };
 		2D525C611D265239006B22FE /* CZMat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZMat4.h; sourceTree = "<group>"; };
@@ -132,6 +135,12 @@
 		2D525C951D2652D6006B22FE /* scene_violin.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene_violin.cfg; path = ../../resource/scene_violin.cfg; sourceTree = "<group>"; };
 		2D525C961D2652D6006B22FE /* scene.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene.cfg; path = ../../resource/scene.cfg; sourceTree = "<group>"; };
 		2D525C9A1D265344006B22FE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModelFactory.cpp; sourceTree = "<group>"; };
+		2DA38F3C1D2F75160044AE42 /* ModelFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ModelFactory.hpp; sourceTree = "<group>"; };
+		2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjModel.cpp; sourceTree = "<group>"; };
+		2DA38F3F1D2F7F120044AE42 /* ObjModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjModel.hpp; sourceTree = "<group>"; };
+		2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjLoader.cpp; sourceTree = "<group>"; };
+		2DA38F421D2FA2A30044AE42 /* ObjLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjLoader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,8 +226,6 @@
 			children = (
 				2D525C5B1D265239006B22FE /* CZBasic.h */,
 				2D525C5C1D265239006B22FE /* CZDefine.h */,
-				2D525C5D1D265239006B22FE /* CZGeometry.cpp */,
-				2D525C5E1D265239006B22FE /* CZGeometry.h */,
 				2D525C5F1D265239006B22FE /* CZLog.h */,
 				2D525C601D265239006B22FE /* CZMat4.cpp */,
 				2D525C611D265239006B22FE /* CZMat4.h */,
@@ -236,6 +243,8 @@
 		2D525C691D265239006B22FE /* objModel */ = {
 			isa = PBXGroup;
 			children = (
+				2D525C5D1D265239006B22FE /* CZGeometry.cpp */,
+				2D525C5E1D265239006B22FE /* CZGeometry.h */,
 				2D525C6A1D265239006B22FE /* CZMaterial.cpp */,
 				2D525C6B1D265239006B22FE /* CZMaterial.h */,
 				2D525C6C1D265239006B22FE /* CZMaterialLib.cpp */,
@@ -244,6 +253,12 @@
 				2D525C6F1D265239006B22FE /* CZObjFileParser.h */,
 				2D525C701D265239006B22FE /* CZObjModel.cpp */,
 				2D525C711D265239006B22FE /* CZObjModel.h */,
+				2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */,
+				2DA38F3C1D2F75160044AE42 /* ModelFactory.hpp */,
+				2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */,
+				2DA38F3F1D2F7F120044AE42 /* ObjModel.hpp */,
+				2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */,
+				2DA38F421D2FA2A30044AE42 /* ObjLoader.hpp */,
 			);
 			name = objModel;
 			path = ../../src/objModel;
@@ -388,10 +403,13 @@
 				2D525C7B1D265239006B22FE /* CZAnimation.cpp in Sources */,
 				2D525C871D265239006B22FE /* CZCube.cpp in Sources */,
 				2D525C7C1D265239006B22FE /* CZShapeAnimation.cpp in Sources */,
+				2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */,
 				2D525C821D265239006B22FE /* CZUtil.mm in Sources */,
 				2D525C891D265239006B22FE /* UIImage+Resize.m in Sources */,
+				2DA38F3D1D2F75160044AE42 /* ModelFactory.cpp in Sources */,
 				2D525C7F1D265239006B22FE /* CZNode.cpp in Sources */,
 				2D525C841D265239006B22FE /* CZMaterialLib.cpp in Sources */,
+				2DA38F401D2F7F120044AE42 /* ObjModel.cpp in Sources */,
 				2D525C851D265239006B22FE /* CZObjFileParser.cpp in Sources */,
 				2D525C7E1D265239006B22FE /* CZMat4.cpp in Sources */,
 				2D525C831D265239006B22FE /* CZMaterial.cpp in Sources */,
@@ -586,6 +604,7 @@
 				2D525C931D2652C3006B22FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2D525C9D1D265368006B22FE /* Build configuration list for PBXAggregateTarget "createLib" */ = {
 			isa = XCConfigurationList;
@@ -594,6 +613,7 @@
 				2D525C9F1D265368006B22FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
