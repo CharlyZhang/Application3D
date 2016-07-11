@@ -44,7 +44,7 @@ void CZMaterialLib::parseLine(ifstream& ifs, const string& ele_id)
 		if(image)
         {
             LOG_INFO(" texture(%s) loaded successfully\n",texImgName.c_str());
-            m_pCur -> setTextureImage(image);
+            m_pCur ->texImage = image;
         }
     }
 //    else if ("map_Ka" == ele_id) {

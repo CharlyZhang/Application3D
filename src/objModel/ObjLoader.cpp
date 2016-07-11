@@ -115,8 +115,9 @@ bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
         fread((char*)pMaterial->Ka, sizeof(float), 4, fp);
         fread((char*)pMaterial->Kd, sizeof(float), 4, fp);
         fread((char*)pMaterial->Ks, sizeof(float), 4, fp);
-        fread((char*)&pMaterial->hasTexture, sizeof(bool), 1, fp);
-        if (pMaterial->hasTexture)
+        bool hasTexture;
+        fread((char*)&hasTexture, sizeof(bool), 1, fp);
+        if (hasTexture)
         {
             int w,h;
             fread((char*)&w, sizeof(int), 1, fp);
@@ -136,9 +137,9 @@ bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
                     colorSpace = CZImage::GRAY;
                     break;
             }
-            CZImage *texImage = new CZImage(w,h,colorSpace);
-            fread((char*)texImage->data, sizeof(unsigned char), w*h*colorComponentNum, fp);
-            pMaterial->setTextureImage(texImage);
+            CZImage *image = new CZImage(w,h,colorSpace);
+            fread((char*)image->data, sizeof(unsigned char), w*h*colorComponentNum, fp);
+            pMaterial->texImage = image;
         }
         
         pCurModel->materialLib.setMaterial(materialName, pMaterial);

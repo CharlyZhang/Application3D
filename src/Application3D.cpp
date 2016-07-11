@@ -14,6 +14,8 @@
 
 using namespace std;
 
+GLuint Application3D::textures[128];
+std::map<CZImage*,short> Application3D::textureMap;
 
 #if defined(__ANDROID__)
 char* GetImageClass = nullptr;
@@ -31,6 +33,8 @@ Application3D::Application3D()
 	backgroundImage = NULL;
 	backgroundTexId = -1;
 	vao = -1;
+    for(auto i = 0; i < 128; i ++) textures[i] = -1;
+    textureMap.clear();
 }
 
 Application3D::~Application3D()
@@ -55,6 +59,9 @@ Application3D::~Application3D()
 	}
 	if (backgroundTexId != -1) glDeleteTextures(1, &backgroundTexId);
 	if (vao != -1) GL_DEL_VERTEXARRAY(1, &vao);
+    for (auto i = 0; i < 128 && textures[i] != -1; i++)
+        glDeleteTextures(1, &textures[i]);
+    textureMap.clear();
 }
 
 bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL */ )
@@ -804,4 +811,68 @@ bool Application3D::blitBackgroundImage()
 	CZCheckGLError();
 
 	return true;
+}
+
+bool Application3D::enableTexture(CZImage* image)
+{
+    if(image == NULL || image->data == NULL)
+    {
+        LOG_WARN("image is illegal\n");
+        return false;
+    }
+    
+    map<CZImage*, short>::iterator itr = textureMap.find(image);
+    
+    short texInd;
+    if(itr == textureMap.end())
+    {
+        if (itr == textureMap.begin()) texInd = 0;
+        else    texInd = (--itr)->second + 1;
+        
+        if(texInd >= 128)
+        {
+            LOG_ERROR("texture resources exceed!\n");
+            return false;
+        }
+        else
+        {
+            //generate an OpenGL texture ID for this texture
+            glGenTextures(1, &textures[texInd]);
+            //bind to the new texture ID
+            glBindTexture(GL_TEXTURE_2D, textures[texInd]);
+            //store the texture data for OpenGL use
+            if (image->colorSpace == CZImage::RGBA) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)image->width , (GLsizei)image->height,
+                             0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
+            }
+            else if (image->colorSpace == CZImage::RGB) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)image->width , (GLsizei)image->height,
+                             0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+            }
+            else if (image->colorSpace == CZImage::GRAY) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)image->width , (GLsizei)image->height,
+                             0, GL_LUMINANCE, GL_UNSIGNED_BYTE, image->data);
+            }
+            
+            //	gluBuild2DMipmaps(GL_TEXTURE_2D, components, width, height, texFormat, GL_UNSIGNED_BYTE, bits);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            CZCheckGLError();
+        }
+    }
+    else
+    {
+        texInd = itr->second;
+    }
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textures[texInd]);
+    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#if !defined(__APPLE__)
+    glEnable(GL_TEXTURE_2D);
+#endif
+    
+    return true;
 }

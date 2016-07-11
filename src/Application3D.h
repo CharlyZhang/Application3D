@@ -68,8 +68,7 @@ public:
     void setAmbientColor(unsigned char r, unsigned char g, unsigned char b);
     void setDiffuseColor(unsigned char r, unsigned char g, unsigned char b);
     
-	// texture
-	bool enableTexture(bool flag);
+    static bool enableTexture(CZImage* image);
 
 private:
 	bool loadShaders();
@@ -98,8 +97,12 @@ private:
 	int width, height;
 	CZColor modelColor;
     CZImage *backgroundImage;
-    GLuint backgroundTexId,vao;;
+    GLuint backgroundTexId,vao;
     char *documentDirectory;                          ///< to store the binary data of model
+    
+    // ! should move to `Render`
+    static GLuint textures[128];
+    static std::map<CZImage*,short> textureMap;              ///< model textures mapping
 };
 
 #endif

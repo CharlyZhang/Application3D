@@ -11,9 +11,6 @@ public:
 	CZMaterial();
     ~CZMaterial();
 
-    void setTextureImage(CZImage *img);
-    bool use() const;
-
 public:
 	float	Ns;		///<	shininess
     float   Ke[4];
@@ -21,12 +18,6 @@ public:
 	float	Kd[4];	///<	diffuse color
 	float	Ks[4];	///<	specular color
     CZImage *texImage;
-
-	bool hasTexture;
-	unsigned int texId;
-
-private:
-	std::string	 dirPath;
 };
 
 #endif

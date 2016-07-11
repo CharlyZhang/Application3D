@@ -1,6 +1,7 @@
 #include "CZObjModel.h"
 #include "CZMaterial.h"
 #include "CZLog.h"
+#include "Application3D.h"
 #include "CZDefine.h"
 
 using namespace std;
@@ -70,9 +71,11 @@ bool CZObjModel::saveAsBinary(const std::string& path)
         fwrite((char*)pMaterial->Ka, sizeof(float), 4, fp);
         fwrite((char*)pMaterial->Kd, sizeof(float), 4, fp);
         fwrite((char*)pMaterial->Ks, sizeof(float), 4, fp);
-        fwrite((char*)&pMaterial->hasTexture, sizeof(bool), 1, fp);
-        if (pMaterial->hasTexture)
+        bool hasTexture;
+        if(pMaterial->texImage)
         {
+            hasTexture = true;
+            fwrite((char*)&hasTexture, sizeof(bool), 1, fp);
             int w = pMaterial->texImage->width;
             int h = pMaterial->texImage->height;
             fwrite((char*)&w, sizeof(int), 1, fp);
@@ -92,6 +95,11 @@ bool CZObjModel::saveAsBinary(const std::string& path)
 			}
 			fwrite(&colorComponentNum, sizeof(char),1,fp);
             fwrite((char*)pMaterial->texImage->data, sizeof(unsigned char), w*h*colorComponentNum, fp);
+        }
+        else
+        {
+            hasTexture = false;
+            fwrite((char*)&hasTexture, sizeof(bool), 1, fp);
         }
     }
     
@@ -144,7 +152,7 @@ bool CZObjModel::draw(CZShader* pShader, CZMat4 &viewProjMat)
         glUniform1f(pShader->getUniformLocation("material.Ns"), Ns);
         
         int hasTex;
-        if (pMaterial && pMaterial->use() && pGeometry->hasTexCoord)
+        if (pMaterial && Application3D::enableTexture(pMaterial->texImage) && pGeometry->hasTexCoord)
             hasTex = 1;
         else	hasTex = 0;
         
