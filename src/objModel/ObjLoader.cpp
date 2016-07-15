@@ -152,6 +152,103 @@ bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
     return true;
 }
 
+bool ObjLoader::saveToTemp(CZObjModel *objModel, const string& path)
+{
+    if (objModel == nullptr)
+    {
+        LOG_ERROR("objModel is nullptr!\n");
+        return false;
+    }
+    
+    FILE *fp = fopen(path.c_str(), "wb");
+    
+    if (fp == NULL)
+    {
+        LOG_ERROR("file open failed\n");
+        return false;
+    }
+    // material lib name
+    unsigned char mtlLibNameLen = objModel->mtlLibName.size();
+    fwrite((char*)&mtlLibNameLen, sizeof(unsigned char), 1, fp);
+    fwrite((char*)objModel->mtlLibName.c_str(), sizeof(char), mtlLibNameLen, fp);
+    
+    // geometry
+    unsigned short count = objModel->geometries.size();
+    fwrite((char*)(&count), sizeof(count), 1, fp);
+    for (vector<CZGeometry*>::iterator itr = objModel->geometries.begin(); itr != objModel->geometries.end(); itr++)
+    {
+        CZGeometry *p = *itr;
+        // hasTexcoord
+        fwrite(&(p->hasTexCoord), sizeof(bool), 1, fp);
+        // material name
+        unsigned char mtlNameLen = p->materialName.size();
+        fwrite(&mtlNameLen, sizeof(unsigned char), 1, fp);
+        fwrite(p->materialName.c_str(), sizeof(char), mtlNameLen, fp);
+        
+        // data
+        fwrite(&(p->vertNum), sizeof(p->vertNum), 1, fp);
+    }
+    
+    // data
+    long totalVertNum = objModel->positions.size();
+    fwrite(&(totalVertNum), sizeof(totalVertNum), 1, fp);
+    fwrite(objModel->positions.data(), sizeof(CZVector3D<float>), totalVertNum, fp);
+    fwrite(objModel->normals.data(), sizeof(CZVector3D<float>), totalVertNum, fp);
+    fwrite(objModel->texcoords.data(), sizeof(CZVector2D<float>), totalVertNum, fp);
+    
+    // material
+    CZMaterialMap materialMap = objModel->materialLib.getAll();
+    count = materialMap.size();
+    fwrite((char*)(&count), sizeof(count), 1, fp);
+    for (CZMaterialMap::iterator itr = materialMap.begin(); itr != materialMap.end(); itr++)
+    {
+        // material name
+        string materialName = itr->first;
+        unsigned char mtlNameLen = materialName.size();
+        fwrite(&mtlNameLen, sizeof(unsigned char), 1, fp);
+        fwrite(materialName.c_str(), sizeof(char), mtlNameLen, fp);
+        // material
+        CZMaterial *pMaterial = itr->second;
+        fwrite((char*)&pMaterial->Ns, sizeof(float), 1, fp);
+        fwrite((char*)pMaterial->Ka, sizeof(float), 4, fp);
+        fwrite((char*)pMaterial->Kd, sizeof(float), 4, fp);
+        fwrite((char*)pMaterial->Ks, sizeof(float), 4, fp);
+        bool hasTexture;
+        if(pMaterial->texImage)
+        {
+            hasTexture = true;
+            fwrite((char*)&hasTexture, sizeof(bool), 1, fp);
+            int w = pMaterial->texImage->width;
+            int h = pMaterial->texImage->height;
+            fwrite((char*)&w, sizeof(int), 1, fp);
+            fwrite((char*)&h, sizeof(int), 1, fp);
+            char colorComponentNum;
+            switch (pMaterial->texImage->colorSpace)
+            {
+                case CZImage::RGB:
+                    colorComponentNum = 3;
+                    break;
+                case CZImage::RGBA:
+                    colorComponentNum = 4;
+                    break;
+                case CZImage::GRAY:
+                    colorComponentNum = 1;
+                    break;
+            }
+            fwrite(&colorComponentNum, sizeof(char),1,fp);
+            fwrite((char*)pMaterial->texImage->data, sizeof(unsigned char), w*h*colorComponentNum, fp);
+        }
+        else
+        {
+            hasTexture = false;
+            fwrite((char*)&hasTexture, sizeof(bool), 1, fp);
+        }
+    }
+    
+    fclose(fp);
+    
+    return true;
+}
 ////////////////////
 
 bool ObjLoader::parseFile(const string& path)

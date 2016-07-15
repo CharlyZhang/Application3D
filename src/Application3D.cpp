@@ -4,6 +4,7 @@
 #include "shape/CZShape.h"
 #include "shape/CZCube.hpp"
 #include "ModelFactory.hpp"
+#include "ObjLoader.hpp"
 #include "CZLog.h"
 #include <ctime>
 #include <vector>
@@ -157,7 +158,7 @@ bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true 
         pModel = ModelFactory::createObjModel(filename);
 		
 		if(pModel && quickLoad)
-			pModel->saveAsBinary(tempFileName);
+            ObjLoader::saveToTemp(pModel,tempFileName);
 	}
     
     if(pModel == nullptr)
@@ -860,6 +861,7 @@ bool Application3D::enableTexture(CZImage* image)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             CZCheckGLError();
+            textureMap[image] = texInd;
         }
     }
     else

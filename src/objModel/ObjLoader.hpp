@@ -20,6 +20,8 @@ public:
     static bool load(CZObjModel *objModel, std::string &path);
     static bool loadFromTemp(CZObjModel *objModel, std::string &path);
     
+    static bool saveToTemp(CZObjModel *objModel, const std::string& path);
+    
     ObjLoader()
     {
         LOG_DEBUG("constructing ObjLoader!\n");

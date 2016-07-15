@@ -20,9 +20,7 @@ public:
 	CZObjModel();
 	~CZObjModel();
     
-    bool saveAsBinary(const std::string& path);
 	bool draw(CZShader *pShader, CZMat4 &viewProjMat) override;
-
     
     void transform2GCard();
 };
