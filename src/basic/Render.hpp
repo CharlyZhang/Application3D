@@ -28,9 +28,19 @@ typedef enum _ShaderType {
 typedef enum RenderMode_ {
     kDirectionalLight
 } RenderMode;
+   
+class RenderResource
+{
+public:
+    RenderResource();
+    ~RenderResource();
+    GLuint vao;
+    GLuint vbo;
+};
     
 typedef std::map<ShaderType,CZShader*> ShaderMap;
-typedef std::map<void*,GLuint> GLResourceMap;
+typedef std::map<void*,RenderResource*> GLResourceMap;
+typedef <#type#> <#name#>
     
 class Render
 {
@@ -50,9 +60,10 @@ public:
 private:
     bool draw(CZNode *pNode, CZMat4 &viewProjMat);
     bool drawObjModel(CZNode *pNode, CZMat4 &viewProjMat);
-    bool transform2Gcard(CZNode *pNode);
+  
     bool prepareBgImage(CZImage *bgImg);
     bool prepareBgVAO();
+    RenderResource* prepareObjNodeVAO(CZNode *pNode);
     
     bool enableTexture(CZImage *img);
     
@@ -65,21 +76,16 @@ private:
     RenderMode mode_;
     CZShader *curShader;
     
-    uint32_t m_vao;
-    GLuint m_vboPos;
-    GLuint m_vboNorm;
-    GLuint m_vboTexCoord;
-    bool hasTransformed;
+    // node
+    GLResourceMap resMap;                                      ///< use node memory address to index
 
     // background image
-    GLuint vao_bgImg, vbo_bgImg;
+    RenderResource *pBgImageRes;
     ::CZImage *ptrBgImage;
     
     // textures
     static GLuint textures[128];
     static std::map<::CZImage*,short> textureMap;              ///< model textures mapping
-    GLResourceMap backgroundImage;
-    GLResourceMap vaoMap;                                      ///< use node memory address to index
     
     int width,height;
 };

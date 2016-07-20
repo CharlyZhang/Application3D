@@ -30,6 +30,14 @@ public:
 	std::vector<int> vn;	///<	normal indices
 };
 
+class VertexData
+{
+public:
+    CZVector3D<float> position;
+    CZVector3D<float> normal;
+    CZVector2D<float> texcoord;
+};
+
 /// CZGeometry
 class CZGeometry
 {
@@ -49,9 +57,7 @@ public:
     long unpackRawData(const std::vector<CZVector3D<float> > &posRawVector,	\
                        const std::vector<CZVector3D<float> > &normRawVector,	\
                        const std::vector<CZVector2D<float> > &texCoordRawVector, \
-                       std::vector<CZVector3D<float> > &outPositions, \
-                       std::vector<CZVector3D<float> > &outNormals, \
-                       std::vector<CZVector2D<float> > &outTexcoords);
+                       std::vector<VertexData> &vertexs);
 
 	std::vector<CZFace> faces;			///< faces
 	CZVector3D<float> aabbMin,aabbMax;	///< aabb bounding box
@@ -65,7 +71,7 @@ public:
 
 private:
 	/// generate face normals 
-    void generateFaceNorm(std::vector<CZVector3D<float> > &positions,std::vector<CZVector3D<float> > &outNormals);
+    void generateFaceNorm(std::vector<CZVector3D<float> > &positions,std::vector<VertexData> &vertexs);
 	/// update aabb
 	void updateAABB(CZVector3D<float> p);
 };

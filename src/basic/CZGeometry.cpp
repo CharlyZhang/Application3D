@@ -20,9 +20,7 @@ CZGeometry::~CZGeometry()
 long CZGeometry::unpackRawData(const std::vector<CZVector3D<float> > &posRawVector,	\
             const std::vector<CZVector3D<float> > &normRawVector,	\
             const std::vector<CZVector2D<float> > &texCoordRawVector, \
-            std::vector<CZVector3D<float> > &outPositions, \
-            std::vector<CZVector3D<float> > &outNormals, \
-            std::vector<CZVector2D<float> > &outTexcoords)
+            std::vector<VertexData> &vertexs)
 {
     vector<CZVector3D<float> > tempPositions;
     vertNum = 0;
@@ -31,17 +29,19 @@ long CZGeometry::unpackRawData(const std::vector<CZVector3D<float> > &posRawVect
         for (unsigned i = 0; i < itr->v.size(); ++i)
         {
             vertNum ++ ;
-            outPositions.push_back(posRawVector[itr->v[i]-1]);
-            if (hasNormal)	outNormals.push_back(normRawVector[itr->vn[i]-1]);
+            VertexData vert;
+            vert.position = posRawVector[itr->v[i]-1];
+            if (hasNormal)	vert.normal = normRawVector[itr->vn[i]-1];
             else            tempPositions.push_back(posRawVector[itr->v[i]-1]);
-            if (hasTexCoord)	outTexcoords.push_back(texCoordRawVector[itr->vt[i]-1]);
-            else				outTexcoords.push_back(CZVector2D<float>(0, 0));
+            if (hasTexCoord)	vert.texcoord = texCoordRawVector[itr->vt[i]-1];
+            else				vert.texcoord = CZVector2D<float>(0, 0);
+            vertexs.push_back(vert);
         }
     }
 
     if (!hasNormal)
     {
-        generateFaceNorm(tempPositions,outNormals);
+        generateFaceNorm(tempPositions,vertexs);
         
         tempPositions.clear();
         vector<CZVector3D<float> > temp;
@@ -53,7 +53,7 @@ long CZGeometry::unpackRawData(const std::vector<CZVector3D<float> > &posRawVect
 
 //////////////////////////////////////////////////////////////////////////
 
-void CZGeometry::generateFaceNorm(vector<CZVector3D<float> > &positions,vector<CZVector3D<float> > &outNormals)
+void CZGeometry::generateFaceNorm(vector<CZVector3D<float> > &positions,std::vector<VertexData> &vertexs)
 {
 
 	long vertNum = positions.size();
@@ -70,9 +70,9 @@ void CZGeometry::generateFaceNorm(vector<CZVector3D<float> > &positions,vector<C
 
 		vn.normalize();
 
-		outNormals.push_back(vn);
-		outNormals.push_back(vn);
-		outNormals.push_back(vn);
+        vertexs[iVert].normal = vn;
+        vertexs[iVert + 1].normal = vn;
+        vertexs[iVert + 2].normal = vn;
 	}
 }
 

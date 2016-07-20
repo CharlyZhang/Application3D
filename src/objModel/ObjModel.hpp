@@ -37,9 +37,7 @@ public:
     CZMaterialLib materialLib;
     
     std::vector<CZGeometry*> geometries;
-    std::vector<CZVector3D<float> > positions;
-    std::vector<CZVector3D<float> > normals;
-    std::vector<CZVector2D<float> > texcoords;
+    std::vector<VertexData> vertexs;
 };
 
 #endif /* ObjModel_hpp */

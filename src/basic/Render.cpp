@@ -22,6 +22,18 @@ namespace CZ3D {
 GLuint Render::textures[128];
 map<CZImage*,short> Render::textureMap;
 
+RenderResource::RenderResource()
+{
+    vao = -1;
+    vbo = -1;
+}
+    
+RenderResource::~RenderResource()
+{
+    if(vao != -1) GL_DEL_VERTEXARRAY(1, &vao);
+    if(vbo != -1) glDeleteBuffers(1, &vbo);
+}
+    
 Render::Render()
 {
     width = height = DEFAULT_RENDER_SIZE;
@@ -32,10 +44,7 @@ Render::Render()
     for(auto i = 0; i < 128; i ++) textures[i] = -1;
     textureMap.clear();
     
-    hasTransformed = false;
-    
-    vao_bgImg = -1;
-    vbo_bgImg = -1;
+    pBgImageRes = nullptr;
     ptrBgImage = nullptr;
 }
     
@@ -52,8 +61,12 @@ Render::~Render()
         glDeleteTextures(1, &textures[i]);
     textureMap.clear();
 
-    if (vao_bgImg != -1) GL_DEL_VERTEXARRAY(1, &vao_bgImg);
-    if (vbo_bgImg != -1) glDeleteBuffers(1, &vbo_bgImg);
+    // node
+    for(GLResourceMap::iterator itr = resMap.begin(); itr != resMap.end(); itr++)
+        delete itr->second;
+    resMap.clear();
+    
+    if(pBgImageRes) delete pBgImageRes;
 }
    
 bool Render::init()
@@ -69,8 +82,6 @@ bool Render::init()
     glEnable(GL_NORMALIZE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-    
-    
     
     //texture
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -134,7 +145,7 @@ bool Render::blitBackground(CZImage *bgImg, bool clearColor /* = true */)
     // set up premultiplied normal blend
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
-    GL_BIND_VERTEXARRAY(vao_bgImg);
+    GL_BIND_VERTEXARRAY(pBgImageRes->vao);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     GL_BIND_VERTEXARRAY(0);
@@ -175,18 +186,17 @@ bool Render::frame(CZScene &scene, CZNode *pRootNode, bool clearColor /* = false
     }
     curShader->begin();
     
-    CZCheckGLError();
     // common uniforms
     glUniform3f(curShader->getUniformLocation("ambientLight.intensities"),
                 scene.ambientLight.intensity.x,
                 scene.ambientLight.intensity.y,
                 scene.ambientLight.intensity.z);
-    CZCheckGLError();
+    
     glUniform3f(curShader->getUniformLocation("directionalLight.direction"),
                 scene.directionalLight.direction.x,scene.directionalLight.direction.y,scene.directionalLight.direction.z);
-    CZCheckGLError();
+  
     glUniform3f(curShader->getUniformLocation("eyePosition"),scene.eyePosition.x,scene.eyePosition.y,scene.eyePosition.z);
-    CZCheckGLError();
+    
     glUniform3f(curShader->getUniformLocation("directionalLight.intensities"),
                 scene.directionalLight.intensity.x,
                 scene.directionalLight.intensity.y,
@@ -243,10 +253,9 @@ bool Render::draw(CZNode *pNode, CZMat4 &viewProjMat)
 
 bool Render::drawObjModel(CZNode *pNode, CZMat4 &viewProjMat)
 {
-    if(!hasTransformed)
-    {
-        hasTransformed = transform2Gcard(pNode);
-    }
+    RenderResource* pCurRes = prepareObjNodeVAO(pNode);
+    if(pCurRes == nullptr) return false;
+    
     CZMat4 modelMat = pNode->getTransformMat();
     
     CZObjModel *pCurNode = dynamic_cast<CZObjModel*>(pNode);
@@ -260,7 +269,7 @@ bool Render::drawObjModel(CZNode *pNode, CZMat4 &viewProjMat)
     glUniformMatrix4fv(curShader->getUniformLocation("modelMat"), 1, GL_FALSE, modelMat);
     glUniformMatrix4fv(curShader->getUniformLocation("modelInverseTransposeMat"), 1, GL_FALSE, modelMat.GetInverseTranspose());
     
-    GL_BIND_VERTEXARRAY(m_vao);
+    GL_BIND_VERTEXARRAY(pCurRes->vao);
     
     for (vector<CZGeometry*>::iterator itr = pCurNode->geometries.begin(); itr != pCurNode->geometries.end(); itr++)
     {
@@ -310,7 +319,6 @@ bool Render::drawObjModel(CZNode *pNode, CZMat4 &viewProjMat)
     return true;
 }
 
-    
 ////////////////////////////////////////
     
 bool Render::loadShaders()
@@ -368,12 +376,10 @@ bool Render::loadShaders()
 
 void Render::setSize(int w, int h)
 {
-    if((w != width || h != height) && vao_bgImg != -1)
+    if((w != width || h != height) && pBgImageRes)
     {
-        GL_DEL_VERTEXARRAY(1, &vao_bgImg);
-        vao_bgImg = -1;
-        glDeleteBuffers(1, &vbo_bgImg);
-        vbo_bgImg = -1;
+        delete pBgImageRes;
+        pBgImageRes = nullptr;
     }
     
     width = w;	height = h;
@@ -409,42 +415,38 @@ CZShader* Render::getShader(ShaderType type)
     return itr != shaders.end() ?	itr->second : NULL;
 }
 
-bool Render::transform2Gcard(CZNode *pNode)
+RenderResource* Render::prepareObjNodeVAO(CZNode *pNode)
 {
     CZObjModel *pObjModel = dynamic_cast<CZObjModel*>(pNode);
     
-    if(pObjModel == nullptr) return false;
+    if(pObjModel == nullptr) return nullptr;
+    
+    GLResourceMap::iterator itr = resMap.find(pNode);
+    if(itr != resMap.end()) return itr->second;
+    
+    RenderResource *pRes = new RenderResource;
     // vao
-    GL_GEN_VERTEXARRAY(1, &m_vao);
-    GL_BIND_VERTEXARRAY(m_vao);
+    GL_GEN_VERTEXARRAY(1, &pRes->vao);
+    GL_BIND_VERTEXARRAY(pRes->vao);
     
     // vertex
-    glGenBuffers(1, &m_vboPos);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboPos);
-    glBufferData(GL_ARRAY_BUFFER,pObjModel->positions.size() * 3 * sizeof(GLfloat), pObjModel->positions.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &pRes->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, pRes->vbo);
+    glBufferData(GL_ARRAY_BUFFER,pObjModel->vertexs.size() * sizeof(VertexData), pObjModel->vertexs.data(), GL_STATIC_DRAW);
+    
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    CZCheckGLError();
-    
-    // normal
-    glGenBuffers(1, &m_vboNorm);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboNorm);
-    glBufferData(GL_ARRAY_BUFFER, pObjModel->normals.size() * 3 * sizeof(GLfloat), pObjModel->normals.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), 0);
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    CZCheckGLError();
-    
-    // texcoord
-    glGenBuffers(1, &m_vboTexCoord);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboTexCoord);
-    glBufferData(GL_ARRAY_BUFFER, pObjModel->texcoords.size() * 2 * sizeof(GLfloat), pObjModel->texcoords.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), reinterpret_cast<GLvoid*>(sizeof(CZVector3D<float>)));
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), reinterpret_cast<GLvoid*>(sizeof(CZVector3D<float>)*2));
     CZCheckGLError();
     
     GL_BIND_VERTEXARRAY(0);
 
-    return true;
+    resMap.insert(make_pair(pNode, pRes));
+    
+    return pRes;
 }
 
 bool Render::prepareBgImage(CZImage *bgImg)
@@ -475,13 +477,14 @@ bool Render::prepareBgVAO()
         (GLfloat)width, (GLfloat)height, 1.0, 1.0,
     };
     
-    if (vao_bgImg != -1) return true;
+    if (pBgImageRes) return true;
     
-    GL_GEN_VERTEXARRAY(1, &vao_bgImg);
-    GL_BIND_VERTEXARRAY(vao_bgImg);
+    pBgImageRes = new RenderResource;
+    GL_GEN_VERTEXARRAY(1, &pBgImageRes->vao);
+    GL_BIND_VERTEXARRAY(pBgImageRes->vao);
     // create, bind, and populate VBO
-    glGenBuffers(1, &vbo_bgImg);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_bgImg);
+    glGenBuffers(1, &pBgImageRes->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, pBgImageRes->vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 16, vertices, GL_STATIC_DRAW);
     
     // set up attrib pointers
