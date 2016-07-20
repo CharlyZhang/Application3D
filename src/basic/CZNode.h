@@ -10,7 +10,6 @@
 #define CZNode_h
 
 #include "CZMat4.h"
-#include "CZShader.h"
 #include "CZDefine.h"
 #include <map>
 #include <string>
@@ -44,8 +43,6 @@ public:
     const NodeMap & getAllSubNodes();
     bool removeAllSubNodesOfType(NodeType type);
     
-    virtual bool draw(CZShader *pShader, CZMat4 &viewProjMat);
-    
     //// properties
     CZMat4 rotateMat, translateMat, scaleMat;
     CZNode *parentNode;
@@ -53,11 +50,6 @@ public:
 protected:
     NodeType _type;
     NodeMap _childrenNodes;
-    
-    GLuint m_vao;
-    GLuint m_vboPos;
-    GLuint m_vboNorm;
-    GLuint m_vboTexCoord;
 };
 
 #endif /* CZNode_h */

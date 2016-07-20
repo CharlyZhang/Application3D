@@ -11,20 +11,11 @@
 
 CZNode::CZNode(NodeType t /*= kEmpty*/): _type(t)
 {
-    m_vao = -1;
-    m_vboPos = -1;
-    m_vboNorm = -1;
-    m_vboTexCoord = -1;
     parentNode = nullptr;
 }
 
 CZNode::~CZNode()
 {
-    if(m_vao != -1) GL_DEL_VERTEXARRAY(1, &m_vao);
-    if(m_vboPos != -1) glDeleteBuffers(1, &m_vboPos);
-    if(m_vboNorm != -1) glDeleteBuffers(1, &m_vboNorm);
-    if(m_vboTexCoord != -1) glDeleteBuffers(1, &m_vboTexCoord);
-    
     for(NodeMap::iterator itr = _childrenNodes.begin(); itr != _childrenNodes.end(); itr ++)
     {
         delete itr->second;
@@ -117,21 +108,4 @@ CZNode * CZNode::getNode(std::string &name)
     }
     
     return itr->second;
-}
-
-bool CZNode::draw(CZShader *pShader, CZMat4 &viewProjMat)
-{
-    if(pShader == NULL)
-    {
-        LOG_ERROR("pShader is NULL!\n");
-        return false;
-    }
-    
-    bool result = true;
-    for(NodeMap::iterator itr = _childrenNodes.begin(); itr != _childrenNodes.end(); itr ++)
-    {
-        result = itr->second->draw(pShader, viewProjMat) && result;
-    }
-    
-    return result;
 }

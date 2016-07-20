@@ -20,13 +20,13 @@ public:
     CZCube();
     ~CZCube();
     
-    bool draw(CZShader *pShader, CZMat4 &viewProjMat);
-    
     void create(CZPoint3D &origin, float width, float length, float height);
     void fold(long time);
     void unFold(long time);
     void finished();
-private:
+    
+public:
+    std::vector<VertexData> vertexs;
     static unsigned char indices[];
     float kd[6][4];
 };

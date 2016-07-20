@@ -10,6 +10,7 @@
 #include "CZDefine.h"
 #include "../basic/CZShader.h"
 #include "../objModel/CZObjModel.h"
+#include "../shape/CZCube.hpp"
 #include <vector>
 
 #define DEFAULT_RENDER_SIZE 500					///< default render buffer size
@@ -238,6 +239,7 @@ bool Render::draw(CZNode *pNode, CZMat4 &viewProjMat)
             result = drawObjModel(pNode, viewProjMat);
             break;
         case CZNode::kShape:
+            result = drawShape(pNode,viewProjMat);
             break;
         default:
             break;
@@ -314,6 +316,48 @@ bool Render::drawObjModel(CZNode *pNode, CZMat4 &viewProjMat)
     return true;
 }
 
+bool Render::drawShape(CZNode *pNode, CZMat4 &viewProjMat)
+{
+    RenderResource* pCurRes = prepareShapeVAO(pNode);
+    if(pCurRes == nullptr) return false;
+    
+    CZMat4 modelMat = pNode->getTransformMat();
+    
+    CZCube *pCube = dynamic_cast<CZCube*>(pNode);
+    if(pCube == nullptr)
+    {
+        LOG_ERROR("dynamic cast failed!\n");
+        return false;
+    }
+    
+    glUniformMatrix4fv(curShader->getUniformLocation("mvpMat"), 1, GL_FALSE, viewProjMat * modelMat);
+    glUniformMatrix4fv(curShader->getUniformLocation("modelMat"), 1, GL_FALSE, modelMat);
+    glUniformMatrix4fv(curShader->getUniformLocation("modelInverseTransposeMat"), 1, GL_FALSE, modelMat.GetInverseTranspose());
+    
+    GL_BIND_VERTEXARRAY(pCurRes->vao);
+    
+    for (int i = 0; i < 6; i ++)
+    {
+        float ke[4], ka[4], ks[4], Ns = 10.0;
+        ka[0] = 0.2;    ka[1] = 0.2;    ka[2] = 0.2;
+        ke[0] = 0.0;    ke[1] = 0.0;    ke[2] = 0.0;
+        ks[0] = 0.0;    ks[1] = 0.0;    ks[2] = 0.0;
+        Ns = 10.0;
+        
+        glUniform3f(curShader->getUniformLocation("material.kd"), pCube->kd[i][0], pCube->kd[i][1], pCube->kd[i][2]);
+        glUniform3f(curShader->getUniformLocation("material.ka"), ka[0], ka[1], ka[2]);
+        glUniform3f(curShader->getUniformLocation("material.ke"), ke[0], ke[1], ke[2]);
+        glUniform3f(curShader->getUniformLocation("material.ks"), ks[0], ks[1], ks[2]);
+        glUniform1f(curShader->getUniformLocation("material.Ns"), Ns);
+        glUniform1i(curShader->getUniformLocation("hasTex"), 0);
+        glDrawElements(GL_TRIANGLE_STRIP, 4,  GL_UNSIGNED_BYTE, &pCube->indices[i*4]);
+    }
+    
+    GL_BIND_VERTEXARRAY(0);
+    CZCheckGLError();
+    
+    return true;
+}
 ////////////////////////////////////////
     
 bool Render::loadShaders()
@@ -443,7 +487,41 @@ RenderResource* Render::prepareObjNodeVAO(CZNode *pNode)
     
     return pRes;
 }
-
+    
+RenderResource* Render::prepareShapeVAO(CZNode *pNode)
+{
+    CZCube *pCube = dynamic_cast<CZCube*>(pNode);
+    
+    if(pCube == nullptr) return nullptr;
+    
+    GLResourceMap::iterator itr = resMap.find(pNode);
+    if(itr != resMap.end()) return itr->second;
+    
+    RenderResource *pRes = new RenderResource;
+    // vao
+    GL_GEN_VERTEXARRAY(1, &pRes->vao);
+    GL_BIND_VERTEXARRAY(pRes->vao);
+    
+    // vertex
+    glGenBuffers(1, &pRes->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, pRes->vbo);
+    glBufferData(GL_ARRAY_BUFFER,pCube->vertexs.size() * sizeof(VertexData), pCube->vertexs.data(), GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), 0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), reinterpret_cast<GLvoid*>(sizeof(CZVector3D<float>)));
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), reinterpret_cast<GLvoid*>(sizeof(CZVector3D<float>)*2));
+    CZCheckGLError();
+    
+    GL_BIND_VERTEXARRAY(0);
+    
+    resMap.insert(make_pair(pNode, pRes));
+    
+    return pRes;
+}
+    
 bool Render::prepareBgImage(CZImage *bgImg)
 {
     if(bgImg == ptrBgImage) return true;

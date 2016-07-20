@@ -60,10 +60,12 @@ public:
 private:
     bool draw(CZNode *pNode, CZMat4 &viewProjMat);
     bool drawObjModel(CZNode *pNode, CZMat4 &viewProjMat);
-  
+    bool drawShape(CZNode *pNode, CZMat4 &viewProjMat);
+    
     bool prepareBgImage(CZImage *bgImg);
     bool prepareBgVAO();
     RenderResource* prepareObjNodeVAO(CZNode *pNode);
+    RenderResource* prepareShapeVAO(CZNode *pNode);
     
     bool enableTexture(CZImage *img);
     

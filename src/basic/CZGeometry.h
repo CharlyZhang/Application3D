@@ -4,6 +4,7 @@
 #include "CZVector.h"
 #include <vector>
 #include <string>
+#include "../basic/CZBasic.h"
 
 /// CZFace
 class CZFace
@@ -28,14 +29,6 @@ public:
 	std::vector<int> v;		///<	vertex indices
 	std::vector<int> vt;	///<	texture indices
 	std::vector<int> vn;	///<	normal indices
-};
-
-class VertexData
-{
-public:
-    CZVector3D<float> position;
-    CZVector3D<float> normal;
-    CZVector2D<float> texcoord;
 };
 
 /// CZGeometry

@@ -28,6 +28,14 @@ typedef struct _CZDirectionalLight {
 	CZPoint3D intensity;
 } CZDirectionalLight;
 
+class VertexData
+{
+public:
+    CZVector3D<float> position;
+    CZVector3D<float> normal;
+    CZVector2D<float> texcoord;
+};
+
 // Scene
 typedef struct _CZScene {
 	CZColor	bgColor;                        //< background color
