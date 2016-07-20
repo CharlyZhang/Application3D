@@ -12,6 +12,8 @@
 #include "CZAnimaitonManager.hpp"
 #include "Render.hpp"
 
+namespace CZ3D {
+    
 class Application3D : private CZObjFileParser
 {
 public:
@@ -83,4 +85,5 @@ private:
     char *documentDirectory;                          ///< to store the binary data of model
 };
 
+}
 #endif

@@ -14,6 +14,8 @@
 #include <map>
 #include <string>
 
+namespace CZ3D {
+    
 class CZAnimationManager
 {
 public:
@@ -30,4 +32,5 @@ private:
     AnimationsMap _animationsMap;
 };
 
+}
 #endif /* CZAnimaitonManager_hpp */

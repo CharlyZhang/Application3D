@@ -25,7 +25,7 @@
 
 @implementation EAGLView
 {
-    Application3D app3d;
+    CZ3D::Application3D app3d;
     NSString *modelPath;
     BOOL modelLoaded;
 }

@@ -6,6 +6,8 @@
 #include <string>
 #include "../basic/CZBasic.h"
 
+namespace CZ3D {
+    
 /// CZFace
 class CZFace
 {
@@ -68,5 +70,7 @@ private:
 	/// update aabb
 	void updateAABB(CZVector3D<float> p);
 };
+    
+}
 
 #endif

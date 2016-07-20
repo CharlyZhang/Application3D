@@ -14,6 +14,8 @@
 
 #include <string>
 
+namespace CZ3D {
+    
 class ObjLoader : public CZObjFileParser
 {
 public:
@@ -41,5 +43,7 @@ private:
     static CZObjModel *pCurModel;
     static ObjLoader objLoader;                     
 };
+    
+}
 
 #endif /* ObjLoader_hpp */

@@ -10,6 +10,8 @@
 
 using namespace std;
 
+namespace CZ3D {
+    
 ObjModel::ObjModel()
 {
     mtlLibName = "Not Set";
@@ -62,4 +64,6 @@ void ObjModel::unpackRawData()
         pGeometry->firstIdx = totalVertNum;
         totalVertNum += vertNum;
     }
+}
+
 }

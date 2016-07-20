@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace CZ3D {
+    
 CZObjModel* ModelFactory::createObjModel(const char* filename)
 {
     if(filename == NULL)
@@ -50,4 +52,6 @@ CZObjModel* ModelFactory::createObjModelFromTemp(const char* filename)
     
     delete pModel;
     return nullptr;
+}
+
 }

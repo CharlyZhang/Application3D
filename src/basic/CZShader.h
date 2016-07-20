@@ -16,6 +16,8 @@
 #include <string>
 #include <map>
 
+namespace CZ3D {
+    
 class CZShader
 {
 public:
@@ -63,4 +65,5 @@ private:
 	std::map<std::string,unsigned int> m_uniforms;
 };
 
+}
 #endif

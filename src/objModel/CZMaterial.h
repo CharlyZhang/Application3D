@@ -5,6 +5,8 @@
 #include "CZDefine.h"
 #include "CZBasic.h"
 
+namespace CZ3D {
+    
 class CZMaterial
 {
 public:
@@ -20,4 +22,5 @@ public:
     CZImage *texImage;
 };
 
+}
 #endif

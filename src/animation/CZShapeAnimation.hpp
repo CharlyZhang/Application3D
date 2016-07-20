@@ -12,6 +12,8 @@
 #include "CZAnimation.hpp"
 #include "CZShape.h"
 
+namespace CZ3D {
+    
 class CZShapeAnimation : public CZAnimation
 {
 public:
@@ -21,4 +23,5 @@ public:
     CZShape *shape;
 };
 
+}
 #endif /* CZShapeAnimation_hpp */

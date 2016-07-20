@@ -11,6 +11,8 @@
 
 using namespace std;
 
+namespace CZ3D {
+    
 unsigned char CZCube::indices[] = {0,1,2,3,
                                     0,2,4,6,
                                     2,3,6,7,
@@ -56,4 +58,6 @@ void CZCube::create(CZPoint3D &origin, float width, float length, float height)
         kd[i][2] = 1.0f * rand() / RAND_MAX;
         kd[i][3] = 1.0f;
     }
+}
+
 }

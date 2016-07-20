@@ -14,6 +14,8 @@
 
 #include <vector>
 
+namespace CZ3D {
+    
 class CZCube : public CZShape
 {
 public:
@@ -31,4 +33,5 @@ public:
     float kd[6][4];
 };
 
+}
 #endif /* CZCube_hpp */

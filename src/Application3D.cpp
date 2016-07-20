@@ -13,7 +13,9 @@
 #define CONFIG_FILE_PATH	"./scene.cfg"
 
 using namespace std;
-using namespace CZ3D;
+
+namespace CZ3D {
+    
 
 #if defined(__ANDROID__)
 char* GetImageClass = nullptr;
@@ -531,3 +533,4 @@ void Application3D::parseMainColor(ifstream& ifs)
 		>> scene.mColor.a;
 }
 
+}

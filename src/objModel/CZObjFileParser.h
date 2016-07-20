@@ -17,6 +17,8 @@
 #include <string>
 #include "CZLog.h"
 
+namespace CZ3D {
+    
 class CZObjFileParser
 {
 public:
@@ -61,4 +63,5 @@ protected:
 	std::string curDirPath;	//relative path(compared to the root directory of the project)
 };
 
+}
 #endif

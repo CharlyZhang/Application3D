@@ -8,7 +8,8 @@
 
 #include "CZNode.h"
 
-
+namespace CZ3D {
+    
 CZNode::CZNode(NodeType t /*= kEmpty*/): _type(t)
 {
     parentNode = nullptr;
@@ -108,4 +109,6 @@ CZNode * CZNode::getNode(std::string &name)
     }
     
     return itr->second;
+}
+    
 }

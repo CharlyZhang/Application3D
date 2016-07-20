@@ -8,6 +8,7 @@
 
 #include "CZAnimation.hpp"
 
+namespace CZ3D {
 
 CZAnimation::CZAnimation(): _isPlaying(false)
 {
@@ -26,4 +27,6 @@ void CZAnimation::play()
 void CZAnimation::pause()
 {
     _isPlaying = false;
+}
+    
 }

@@ -46,7 +46,7 @@ Render::Render()
     
 Render::~Render()
 {
-    for (map<ShaderType,CZShader*>::iterator itr = shaders.begin(); itr != shaders.end(); itr++)
+    for (ShaderMap::iterator itr = shaders.begin(); itr != shaders.end(); itr++)
     {
         delete itr->second;
     }

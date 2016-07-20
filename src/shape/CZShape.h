@@ -11,6 +11,8 @@
 
 #include "CZNode.h"
 
+namespace CZ3D {
+    
 class CZShape : public CZNode
 {
 public:
@@ -20,4 +22,5 @@ public:
     bool isAnimating;
 };
 
+}
 #endif /* CZShape_h */

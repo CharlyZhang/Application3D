@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cmath>
 
+namespace CZ3D {
+    
 template <class T>
 class CZVector3D
 {
@@ -150,4 +152,5 @@ public:
 	void normalize() {	*this = *this / magnitude();}
 };
 
+}
 #endif

@@ -9,6 +9,8 @@
 #ifndef ModelFactory_hpp
 #define ModelFactory_hpp
 
+namespace CZ3D {
+    
 class CZObjModel;
 
 class ModelFactory
@@ -18,5 +20,5 @@ public:
     static CZObjModel* createObjModelFromTemp(const char* filename);
 };
 
-
+}
 #endif /* ModelFactory_hpp */

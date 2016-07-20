@@ -8,6 +8,8 @@
 
 #include "CZShapeAnimation.hpp"
 
+namespace CZ3D {
+    
 void CZShapeAnimation::update(long time)
 {
     if(!_isPlaying) return;
@@ -16,6 +18,8 @@ void CZShapeAnimation::update(long time)
 
 void CZShapeAnimation::start(std::string &name)
 {
+    
+}
     
 }
 

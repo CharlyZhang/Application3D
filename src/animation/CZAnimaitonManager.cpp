@@ -11,6 +11,8 @@
 
 using namespace std;
 
+namespace CZ3D {
+    
 CZAnimationManager::~CZAnimationManager()
 {
     for(AnimationsMap::iterator itr = _animationsMap.begin(); itr != _animationsMap.end(); itr ++)
@@ -54,4 +56,6 @@ void CZAnimationManager::update(long time)
     {
         itr->second->update(time);
     }
+}
+    
 }

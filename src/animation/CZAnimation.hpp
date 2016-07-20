@@ -11,6 +11,8 @@
 
 #include <string>
 
+namespace CZ3D {
+    
 class CZAnimation
 {
 public:
@@ -33,4 +35,5 @@ protected:
     bool _isPlaying;
 };
 
+}
 #endif /* CZAnimation_hpp */

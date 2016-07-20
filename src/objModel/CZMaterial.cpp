@@ -3,6 +3,8 @@
 
 using namespace std;
 
+namespace CZ3D {
+    
 CZMaterial::CZMaterial()
 {
     Ns = 10;						//	shininess
@@ -19,5 +21,7 @@ CZMaterial::CZMaterial()
 CZMaterial::~CZMaterial()
 {
     if (texImage)   delete texImage;
+}
+    
 }
 

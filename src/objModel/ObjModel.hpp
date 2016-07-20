@@ -14,6 +14,8 @@
 #include "CZMaterialLib.h"
 #include <vector>
 
+namespace CZ3D {
+    
 class ObjLoader;
 
 class ObjModel
@@ -39,5 +41,7 @@ public:
     std::vector<CZGeometry*> geometries;
     std::vector<VertexData> vertexs;
 };
+    
+}
 
 #endif /* ObjModel_hpp */

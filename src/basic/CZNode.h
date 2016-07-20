@@ -14,6 +14,8 @@
 #include <map>
 #include <string>
 
+namespace CZ3D {
+    
 class CZNode
 {
 public:
@@ -51,5 +53,7 @@ protected:
     NodeType _type;
     NodeMap _childrenNodes;
 };
+    
+}
 
 #endif /* CZNode_h */

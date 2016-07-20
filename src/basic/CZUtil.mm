@@ -9,7 +9,15 @@
 #   import <UIKit/UIKit.h>
 #   import "UIImage+Resize.h"
 #else
-#include <android/bitmap.h>
+#   include <android/bitmap.h>
+#endif
+
+using namespace std;
+
+namespace CZ3D {
+    
+#if defined(__ANDROID__)
+
 extern JNIEnv *jniEnv;
 
 extern char* GetImageClass;
@@ -17,13 +25,6 @@ extern char* GetImageMethod;
 
 extern char* ModelLoadCallerClass;
 extern char* ModelLoadCallerMethod;
-
-#endif
-
-using namespace std;
-
-#if defined(__ANDROID__)
-
 
 jstring charToJstring(JNIEnv* env, const char* pat)
 {
@@ -318,4 +319,6 @@ void modelLoadingDone()
     jniEnv->CallStaticVoidMethod(cls,mid);
     
 #endif
+}
+
 }

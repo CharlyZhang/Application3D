@@ -73,9 +73,13 @@
 #include "CZLog.h"
 #include "CZBasic.h"
 
+namespace CZ3D {
+ 
 extern void CZCheckGLError_(const char *file, int line);
 extern CZImage *CZLoadTexture(const std::string &filename);
 extern void modelLoadingDone();
+
+}
 
 #ifdef _DEBUG
 #define CZCheckGLError()	CZCheckGLError_(__FILE__, __LINE__)

@@ -14,9 +14,11 @@
 #include "CZNode.h"
 #include <map>
 
+namespace CZ3D {
+
+    
 class CZShader;
 class Application3D;            ///< for developing
-namespace CZ3D {
     
 // shader type
 typedef enum _ShaderType {
@@ -47,7 +49,7 @@ class Render
 public:
     Render();
     ~Render();
-    friend class ::Application3D;
+    friend class Application3D;
     
     bool init();
     bool blitBackground(CZImage *bgImg, bool clearColor = true);
@@ -83,7 +85,7 @@ private:
 
     // background image
     RenderResource *pBgImageRes;
-    ::CZImage *ptrBgImage;
+    CZImage *ptrBgImage;
     
     // textures
     TextureMap textureMap;
