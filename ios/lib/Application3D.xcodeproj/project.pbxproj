@@ -144,6 +144,7 @@
 		2DA38F421D2FA2A30044AE42 /* ObjLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjLoader.hpp; sourceTree = "<group>"; };
 		2DCF47341D38E726005226C9 /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
 		2DCF47351D38E726005226C9 /* Render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
+		2DCF481A1D3F7D65005226C9 /* GLDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDef.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +241,7 @@
 				2D525C681D265239006B22FE /* CZVector.h */,
 				2DCF47341D38E726005226C9 /* Render.cpp */,
 				2DCF47351D38E726005226C9 /* Render.hpp */,
+				2DCF481A1D3F7D65005226C9 /* GLDef.h */,
 			);
 			name = basic;
 			path = ../../src/basic;

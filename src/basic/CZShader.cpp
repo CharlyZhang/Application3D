@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include "CZShader.h"
 #include "CZDefine.h"
+#include "GLDef.h"
 #include "CZLog.h"
 
 using namespace std;

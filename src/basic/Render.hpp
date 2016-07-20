@@ -12,6 +12,7 @@
 #include "../basic/CZMat4.h"
 #include "../basic/CZBasic.h"
 #include "CZNode.h"
+#include "GLDef.h"
 #include <map>
 
 namespace CZ3D {

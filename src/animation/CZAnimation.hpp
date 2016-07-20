@@ -9,9 +9,10 @@
 #ifndef CZAnimation_hpp
 #define CZAnimation_hpp
 
+#include "../basic/CZDefine.h"
 #include <string>
 
-namespace CZ3D {
+namespace NAMESPACE {
     
 class CZAnimation
 {

@@ -6,6 +6,8 @@
 using namespace std;
 
 namespace CZ3D {
+
+extern CZImage *CZLoadTexture(const std::string &filename);
     
 void CZMaterialLib::parseLine(ifstream& ifs, const string& ele_id)
 {

@@ -1,6 +1,7 @@
 #include <string>
 #include "CZBasic.h"
 #include "CZDefine.h"
+#include "GLDef.h"
 
 #if defined(_WIN32)
 #   include "FreeImage.h"
