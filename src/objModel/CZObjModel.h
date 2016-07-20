@@ -17,11 +17,7 @@
 class CZObjModel : public ObjModel, public CZNode
 {
 public:
-	CZObjModel();
-	~CZObjModel();
-    
-	bool draw(CZShader *pShader, CZMat4 &viewProjMat) override;
-    
-    void transform2GCard();
+    CZObjModel();
+    ~CZObjModel();
 };
 #endif

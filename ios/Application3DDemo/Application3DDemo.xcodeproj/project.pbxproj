@@ -15,9 +15,9 @@
 		2D525CE81D266250006B22FE /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2D525CE51D266250006B22FE /* EAGLView.mm */; };
 		2D525CE91D266250006B22FE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D525CE71D266250006B22FE /* ViewController.m */; };
 		2D525CEB1D26627B006B22FE /* data in Resources */ = {isa = PBXBuildFile; fileRef = 2D525CEA1D26627B006B22FE /* data */; };
-		2D525CED1D266348006B22FE /* libApplication3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D525CEC1D266348006B22FE /* libApplication3D.a */; };
 		2D525CEF1D266381006B22FE /* Application3DResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2D525CEE1D266381006B22FE /* Application3DResources.bundle */; };
 		2D525CF91D266497006B22FE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D525CF81D266497006B22FE /* MBProgressHUD.m */; };
+		2DCF473A1D3CDE20005226C9 /* libApplication3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D525CEC1D266348006B22FE /* libApplication3D.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D525CED1D266348006B22FE /* libApplication3D.a in Frameworks */,
+				2DCF473A1D3CDE20005226C9 /* libApplication3D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +299,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: LI Leichuan (YK29UXBS4P)";
 				HEADER_SEARCH_PATHS = (
 					"../../src/**",
@@ -317,6 +319,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: LI Leichuan (YK29UXBS4P)";
 				HEADER_SEARCH_PATHS = (
 					"../../src/**",

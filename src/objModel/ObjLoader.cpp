@@ -147,8 +147,6 @@ bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
     
     fclose(fp);
     
-    pCurModel->transform2GCard();
-    
     return true;
 }
 
@@ -258,7 +256,6 @@ bool ObjLoader::parseFile(const string& path)
     if(CZObjFileParser::parseFile(path) == false) return false;
     
     pCurModel->unpackRawData();
-    pCurModel->transform2GCard();
     
     /// load material lib
     pCurModel->materialLib.parseFile(curDirPath + "/" + pCurModel->mtlLibName);

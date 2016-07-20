@@ -10,13 +10,10 @@
 #include <vector>
 #include <string>
 
-#define DEFAULT_RENDER_SIZE 500					///< default render buffer size
 #define CONFIG_FILE_PATH	"./scene.cfg"
 
 using namespace std;
-
-GLuint Application3D::textures[128];
-std::map<CZImage*,short> Application3D::textureMap;
+using namespace CZ3D;
 
 #if defined(__ANDROID__)
 char* GetImageClass = nullptr;
@@ -29,23 +26,12 @@ char* ModelLoadCallerMethod = nullptr;
 
 Application3D::Application3D()
 {
-	width = height = DEFAULT_RENDER_SIZE;
 	documentDirectory = NULL;
-	backgroundImage = NULL;
-	backgroundTexId = -1;
-	vao = -1;
-    for(auto i = 0; i < 128; i ++) textures[i] = -1;
-    textureMap.clear();
+    backgroundImage = NULL;
 }
 
 Application3D::~Application3D()
 {
-	for (map<ShaderType,CZShader*>::iterator itr = shaders.begin(); itr != shaders.end(); itr++)
-	{
-		delete itr->second;
-	}
-	shaders.clear();
-    
 #ifdef __ANDROID__
 	if(GetImageClass)		{	delete [] GetImageClass; GetImageClass = nullptr;}
 	if(GetImageMethod)		{	delete [] GetImageMethod; GetImageMethod = nullptr;}
@@ -54,46 +40,14 @@ Application3D::~Application3D()
 #endif
     
 	if(documentDirectory)   delete [] documentDirectory;
-	if (backgroundImage) {
-		delete backgroundImage;
-		backgroundImage = NULL;
-	}
-	if (backgroundTexId != -1) glDeleteTextures(1, &backgroundTexId);
-	if (vao != -1) GL_DEL_VERTEXARRAY(1, &vao);
-    for (auto i = 0; i < 128 && textures[i] != -1; i++)
-        glDeleteTextures(1, &textures[i]);
-    textureMap.clear();
+    if (backgroundImage) {
+        delete backgroundImage;
+        backgroundImage = NULL;
+    }
 }
 
 bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL */ )
 {
-# ifdef _WIN32
-	/// OpenGL initialization
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	glShadeModel(GL_SMOOTH);					// smooth shade model
-
-	glClearDepth(1.0f);							// set clear depth
-	glEnable(GL_DEPTH_TEST);
-
-	glEnable(GL_NORMALIZE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
-
-
-	//texture
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	//glEnable(GL_TEXTURE_2D);
-# else
-
-	glClearDepthf(1.0f);									// set clear depth
-	glEnable(GL_DEPTH_TEST);
-# endif
-
-	//    glCullFace(GL_BACK);                            ///< cull back face
-	//    glEnable(GL_CULL_FACE);
-
-	CZCheckGLError();
 
 #if	defined(__APPLE__)	|| defined(_WIN32)
     if(glslDir == nullptr)
@@ -101,12 +55,11 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
         LOG_ERROR("glslDir is nullptr!\n");
         return false;
     }
-    setGLSLDirectory(glslDir);
-	/// load shader
-	loadShaders();
+    render.setGLSLDirectory(glslDir);
 #endif
 
-
+    render.init();
+    
 	/// config scene
 	if(!parseFile(sceneFilename))
 	{
@@ -124,8 +77,6 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 		scene.bgColor = CZColor(0.8f, 0.8f, 0.9f, 1.f);
 		scene.mColor = CZColor(1.f, 1.f, 1.f, 1.f);
 	}
-
-	CZCheckGLError();
 
 	return true;
 }
@@ -171,8 +122,6 @@ bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true 
 
 	reset();
 
-	CZCheckGLError();
-
 	modelLoadingDone();
 	return true;
 }
@@ -184,52 +133,7 @@ bool Application3D::clearObjModel()
 
 bool Application3D::setRenderBufferSize(int w, int h)
 {
-	width = w;	height = h;
-
-	glViewport(0,0,width,height);
-# ifdef _WIN32
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(scene.cameraFov,(GLfloat)width/(GLfloat)height, scene.cameraNearPlane, scene.camearFarPlane);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-# endif
-
-	//    projMat.SetPerspective(60.0,(GLfloat)width/(GLfloat)height, 0.5f, 500.0f);
-	projMat.SetPerspective(scene.cameraFov,(GLfloat)width/(GLfloat)height, scene.cameraNearPlane, scene.camearFarPlane);
-
-	if (backgroundImage) {
-		/// build vao
-		const GLfloat vertices[] =
-		{
-			0.0, 0.0, 0.0, 0.0,
-			(GLfloat)width, 0.0, 1.0, 0.0,
-			0.0, (GLfloat)height, 0.0, 1.0,
-			(GLfloat)width, (GLfloat)height, 1.0, 1.0,
-		};
-
-		if (vao != -1) GL_DEL_VERTEXARRAY(1, &vao);
-		GL_GEN_VERTEXARRAY(1, &vao);
-		GL_BIND_VERTEXARRAY(vao);
-		// create, bind, and populate VBO
-		glGenBuffers(1, &vao);
-		glBindBuffer(GL_ARRAY_BUFFER, vao);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 16, vertices, GL_STATIC_DRAW);
-
-		// set up attrib pointers
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4, (void*)0);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4, (void*)8);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER,0);
-
-		GL_BIND_VERTEXARRAY(0);
-		CZCheckGLError();
-	}
-
+    render.setSize(w, h);
 	return true;
 }
 
@@ -243,62 +147,13 @@ void Application3D::frame()
 	start = clock();
 #endif
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-
-# ifdef _WIN32
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(scene.eyePosition.x,scene.eyePosition.y,scene.eyePosition.z, 0,0,0,0,1,0);
-# endif
-
-	/// blit background image
-	//    glEnable(GL_BLEND);
-	if (backgroundImage && !blitBackgroundImage()) return;
-
-	glClear(GL_DEPTH_BUFFER_BIT);
-	CZMat4 viewMat,viewProjMat;
-	viewMat.SetLookAt(scene.eyePosition.x, scene.eyePosition.y, scene.eyePosition.z, 0, 0, 0, 0, 1, 0);
-    viewProjMat = projMat * viewMat;
+    if(backgroundImage)
+        render.blitBackground(backgroundImage,true);
     
-	CZShader *pShader = getShader(kDirectionalLightShading);
-
-	if (pShader == NULL)
-	{
-		LOG_ERROR("there's no shader designated\n");
-		return;
-	}
-	pShader->begin();
-	CZCheckGLError();
-
-	// common uniforms
-	glUniform3f(pShader->getUniformLocation("ambientLight.intensities"),
-		scene.ambientLight.intensity.x,
-		scene.ambientLight.intensity.y,
-		scene.ambientLight.intensity.z);
-
-	glUniform3f(pShader->getUniformLocation("directionalLight.direction"),
-		scene.directionalLight.direction.x,scene.directionalLight.direction.y,scene.directionalLight.direction.z);
-
-	glUniform3f(pShader->getUniformLocation("eyePosition"),scene.eyePosition.x,scene.eyePosition.y,scene.eyePosition.z);
-
-	glUniform3f(pShader->getUniformLocation("directionalLight.intensities"),
-		scene.directionalLight.intensity.x,
-		scene.directionalLight.intensity.y, 
-		scene.directionalLight.intensity.z);
-	CZCheckGLError();
-
-    rootNode.draw(pShader,viewProjMat);
-    CZCheckGLError();
-
-	pShader->end();
-#ifdef USE_OPENGL
-	glColor3f(1.0,0.0,0.0);
-	glPushMatrix();
-	glTranslatef(scene.light.position.x, scene.light.position.y, scene.light.position.z);
-	glDisable(GL_TEXTURE_2D);
-	glutSolidSphere(2, 100, 100);
-	glPopMatrix();
-#endif
+    if(backgroundImage)
+        render.frame(scene,&rootNode,false);
+    else
+        render.frame(scene, &rootNode, true);
 
 #ifdef SHOW_RENDER_TIME
 	finish = clock();
@@ -332,9 +187,8 @@ void Application3D::reset()
 {
     rootNode.resetMatrix();
     
-	/// color
-	modelColor = scene.mColor;
-	glClearColor(scene.bgColor.r, scene.bgColor.g, scene.bgColor.b, scene.bgColor.a);
+	// TO DO:
+    // copy the initial scene
 }
 
 #ifdef	__ANDROID__
@@ -504,7 +358,6 @@ void Application3D::scale(float s,  const char *nodeName /*= nullptr*/)
 void Application3D::setBackgroundColor(float r, float g, float b, float a)
 {
 	scene.bgColor = CZColor(r,g,b,a);
-	glClearColor(r, g, b, a);
 }
 void Application3D::setBackgroundImage(CZImage *img)
 {
@@ -516,35 +369,12 @@ void Application3D::setBackgroundImage(CZImage *img)
 
 	// clear the old
 	if (backgroundImage) delete backgroundImage;
-	if (backgroundTexId != -1) glDeleteTextures(1, &backgroundTexId);
-
 	backgroundImage = img;
-
-	//generate an OpenGL texture ID for this texture
-	glGenTextures(1, &backgroundTexId);
-	//bind to the new texture ID
-	glBindTexture(GL_TEXTURE_2D, backgroundTexId);
-	//store the texture data for OpenGL use
-	if (img->colorSpace == CZImage::RGBA) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)img->width , (GLsizei)img->height,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
-	}
-	else {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)img->width , (GLsizei)img->height,
-			0, GL_LUMINANCE, GL_UNSIGNED_BYTE, img->data);
-	}
-
-	//	gluBuild2DMipmaps(GL_TEXTURE_2D, components, width, height, texFormat, GL_UNSIGNED_BYTE, bits);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	CZCheckGLError();
 }
 
 void Application3D::setModelColor(float r, float g, float b, float a)
 {
-	modelColor = CZColor(r, g, b, a);
+	scene.mColor = CZColor(r, g, b, a);
 }
 
 // camera
@@ -572,77 +402,6 @@ void Application3D::setDiffuseColor(unsigned char r, unsigned char g, unsigned c
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool Application3D::loadShaders()
-{
-	//
-	vector<string> attributes;
-	attributes.push_back("vert");
-	attributes.push_back("vertNormal");
-	attributes.push_back("vertTexCoord");
-	vector<string> uniforms;
-	uniforms.push_back("mvpMat");
-	uniforms.push_back("modelMat");
-	uniforms.push_back("modelInverseTransposeMat");
-	uniforms.push_back("ambientLight.intensities");
-	uniforms.push_back("directionalLight.direction");
-	uniforms.push_back("directionalLight.intensities");
-	uniforms.push_back("eyePosition");
-	uniforms.push_back("tex");
-	uniforms.push_back("hasTex");
-	uniforms.push_back("material.kd");
-	uniforms.push_back("material.ka");
-	uniforms.push_back("material.ke");
-	uniforms.push_back("material.ks");
-	uniforms.push_back("material.Ns");
-
-	CZShader *pShader = new CZShader("standard","directionalLight",attributes,uniforms);
-	shaders.insert(make_pair(kDirectionalLightShading,pShader));
-
-	//
-	attributes.clear();
-	attributes.push_back("inPosition");
-	attributes.push_back("inTexcoord");
-	uniforms.clear();
-	uniforms.push_back("mvpMat");
-	uniforms.push_back("texture");
-	uniforms.push_back("opacity");
-
-	pShader = new CZShader("blit","blit",attributes,uniforms);
-	shaders.insert(make_pair(kBlitImage,pShader));
-
-    //
-    attributes.clear();
-    attributes.push_back("inPosition");
-    uniforms.clear();
-    uniforms.push_back("mvpMat");
-    uniforms.push_back("inColor");
-    
-    pShader = new CZShader("blitColor","blitColor",attributes,uniforms);
-    shaders.insert(make_pair(kBlitColor,pShader));
-
-	CZCheckGLError();
-
-	return true;
-}
-
-void Application3D::setGLSLDirectory(const char* glslDir)
-{
-    if (glslDir == NULL)
-    {
-        LOG_WARN("glslDir is NULL\n");
-        return;
-    }
-    
-    CZShader::glslDirectory = string(glslDir);
-}
-
-CZShader* Application3D::getShader(ShaderType type)
-{
-	ShaderMap::iterator itr = shaders.find(type);
-
-	return itr != shaders.end() ?	itr->second : NULL;
-}
-
 void Application3D::parseLine(ifstream& ifs, const string& ele_id)
 {
 	float x,y,z;
@@ -772,109 +531,3 @@ void Application3D::parseMainColor(ifstream& ifs)
 		>> scene.mColor.a;
 }
 
-bool Application3D::blitBackgroundImage()
-{
-	CZShader *pShader = getShader(kBlitImage);
-
-	if (pShader == NULL)
-	{
-		LOG_ERROR("there's no shader for blitting background image\n");
-		return false;
-	}
-
-	CZMat4 mvpMat;
-	mvpMat.SetOrtho(0,width,0,height,-1.0f,1.0f);
-
-	pShader->begin();
-
-	glUniformMatrix4fv(pShader->getUniformLocation("mvpMat"),1,GL_FALSE,mvpMat);
-	glUniform1i(pShader->getUniformLocation("texture"), (GLuint) 0);
-	glUniform1f(pShader->getUniformLocation("opacity"), 1.0f); // fully opaque
-
-	glActiveTexture(GL_TEXTURE0);
-	// Bind the texture to be used
-	glBindTexture(GL_TEXTURE_2D, backgroundTexId);
-
-	// clear the buffer to get a transparent background
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT );
-
-	// set up premultiplied normal blend
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
-	GL_BIND_VERTEXARRAY(vao);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	GL_BIND_VERTEXARRAY(0);
-
-	pShader->end();
-
-	CZCheckGLError();
-
-	return true;
-}
-
-bool Application3D::enableTexture(CZImage* image)
-{
-    if(image == NULL || image->data == NULL)
-    {
-        LOG_WARN("image is illegal\n");
-        return false;
-    }
-    
-    map<CZImage*, short>::iterator itr = textureMap.find(image);
-    
-    short texInd;
-    if(itr == textureMap.end())
-    {
-        if (itr == textureMap.begin()) texInd = 0;
-        else    texInd = (--itr)->second + 1;
-        
-        if(texInd >= 128)
-        {
-            LOG_ERROR("texture resources exceed!\n");
-            return false;
-        }
-        else
-        {
-            //generate an OpenGL texture ID for this texture
-            glGenTextures(1, &textures[texInd]);
-            //bind to the new texture ID
-            glBindTexture(GL_TEXTURE_2D, textures[texInd]);
-            //store the texture data for OpenGL use
-            if (image->colorSpace == CZImage::RGBA) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
-            }
-            else if (image->colorSpace == CZImage::RGB) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
-            }
-            else if (image->colorSpace == CZImage::GRAY) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_LUMINANCE, GL_UNSIGNED_BYTE, image->data);
-            }
-            
-            //	gluBuild2DMipmaps(GL_TEXTURE_2D, components, width, height, texFormat, GL_UNSIGNED_BYTE, bits);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            CZCheckGLError();
-            textureMap[image] = texInd;
-        }
-    }
-    else
-    {
-        texInd = itr->second;
-    }
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textures[texInd]);
-    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-#if !defined(__APPLE__)
-    glEnable(GL_TEXTURE_2D);
-#endif
-    
-    return true;
-}

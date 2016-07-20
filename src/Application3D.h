@@ -10,18 +10,11 @@
 #include "CZNode.h"
 #include "CZObjModel.h"
 #include "CZAnimaitonManager.hpp"
+#include "Render.hpp"
 
 class Application3D : private CZObjFileParser
 {
 public:
-	// define type
-	typedef enum _ShaderType {
-		kDirectionalLightShading,		///< directional light shadding mode
-        kBlitImage,                      ///< blit image to the renderbuffer
-        kBlitColor                      ///< blit color
-	} ShaderType;
-	typedef std::map<ShaderType,CZShader*> ShaderMap;
-
 	Application3D();
 	~Application3D();
 
@@ -71,10 +64,6 @@ public:
     static bool enableTexture(CZImage* image);
 
 private:
-	bool loadShaders();
-    void setGLSLDirectory(const char* glslDir);
-	CZShader* getShader(ShaderType type);
-
 	void parseLine(std::ifstream& ifs, const std::string& ele_id) override;
 	void parseEyePosition(std::ifstream& ifs);
     void parseCameraFov(std::ifstream& ifs);
@@ -84,25 +73,14 @@ private:
 	void parseDirectionalLight(std::ifstream& ifs);
 	void parseBackgroundColor(std::ifstream& ifs);
 	void parseMainColor(std::ifstream& ifs);
-    
-    bool blitBackgroundImage();
 
 private:
 	CZScene scene;
-	ShaderMap shaders;
     CZNode rootNode;
-	CZMat4 projMat;
     CZAnimationManager animationManager;
-    
-	int width, height;
-	CZColor modelColor;
+    CZ3D::Render render;
     CZImage *backgroundImage;
-    GLuint backgroundTexId,vao;
     char *documentDirectory;                          ///< to store the binary data of model
-    
-    // ! should move to `Render`
-    static GLuint textures[128];
-    static std::map<CZImage*,short> textureMap;              ///< model textures mapping
 };
 
 #endif

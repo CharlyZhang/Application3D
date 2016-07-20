@@ -62,7 +62,7 @@
         return nil;
     }
     
-    NSString *configPath = [[[NSBundle mainBundle]bundlePath]stringByAppendingString:@"Application3DResources.bundle/scene_violin.cfg"];
+    NSString *configPath = [[[NSBundle mainBundle]bundlePath]stringByAppendingString:@"/Application3DResources.bundle/scene_violin.cfg"];
 
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     

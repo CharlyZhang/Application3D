@@ -61,6 +61,7 @@
 		2DA38F3D1D2F75160044AE42 /* ModelFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */; };
 		2DA38F401D2F7F120044AE42 /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */; };
 		2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */; };
+		2DCF47361D38E726005226C9 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF47341D38E726005226C9 /* Render.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -141,6 +142,8 @@
 		2DA38F3F1D2F7F120044AE42 /* ObjModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjModel.hpp; sourceTree = "<group>"; };
 		2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjLoader.cpp; sourceTree = "<group>"; };
 		2DA38F421D2FA2A30044AE42 /* ObjLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjLoader.hpp; sourceTree = "<group>"; };
+		2DCF47341D38E726005226C9 /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
+		2DCF47351D38E726005226C9 /* Render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +238,8 @@
 				2D525C651D265239006B22FE /* CZShader.h */,
 				2D525C671D265239006B22FE /* CZUtil.mm */,
 				2D525C681D265239006B22FE /* CZVector.h */,
+				2DCF47341D38E726005226C9 /* Render.cpp */,
+				2DCF47351D38E726005226C9 /* Render.hpp */,
 			);
 			name = basic;
 			path = ../../src/basic;
@@ -397,6 +402,7 @@
 			files = (
 				2D525C7D1D265239006B22FE /* CZGeometry.cpp in Sources */,
 				2D525C7A1D265239006B22FE /* CZAnimaitonManager.cpp in Sources */,
+				2DCF47361D38E726005226C9 /* Render.cpp in Sources */,
 				2D525C801D265239006B22FE /* CZShader.cpp in Sources */,
 				2D525C881D265239006B22FE /* Application3D.cpp in Sources */,
 				2D525C861D265239006B22FE /* CZObjModel.cpp in Sources */,
