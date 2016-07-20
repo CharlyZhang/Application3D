@@ -40,7 +40,7 @@ public:
     
 typedef std::map<ShaderType,CZShader*> ShaderMap;
 typedef std::map<void*,RenderResource*> GLResourceMap;
-typedef <#type#> <#name#>
+typedef std::map<void*,GLuint> TextureMap;
     
 class Render
 {
@@ -84,8 +84,7 @@ private:
     ::CZImage *ptrBgImage;
     
     // textures
-    static GLuint textures[128];
-    static std::map<::CZImage*,short> textureMap;              ///< model textures mapping
+    TextureMap textureMap;
     
     int width,height;
 };

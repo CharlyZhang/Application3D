@@ -18,10 +18,6 @@ using namespace std;
 
 namespace CZ3D {
 
-    
-GLuint Render::textures[128];
-map<CZImage*,short> Render::textureMap;
-
 RenderResource::RenderResource()
 {
     vao = -1;
@@ -41,7 +37,6 @@ Render::Render()
     curShader = nullptr;
     
     // texture
-    for(auto i = 0; i < 128; i ++) textures[i] = -1;
     textureMap.clear();
     
     pBgImageRes = nullptr;
@@ -57,8 +52,8 @@ Render::~Render()
     shaders.clear();
     
     // texture
-    for (auto i = 0; i < 128 && textures[i] != -1; i++)
-        glDeleteTextures(1, &textures[i]);
+    for (TextureMap::iterator itr = textureMap.begin();  itr != textureMap.end(); itr++)
+        glDeleteTextures(1, &itr->second);
     textureMap.clear();
 
     // node
@@ -454,14 +449,14 @@ bool Render::prepareBgImage(CZImage *bgImg)
     if(bgImg == ptrBgImage) return true;
     
     // prepare texture
-    map<CZImage*, short>::iterator itr = textureMap.find(ptrBgImage);
+    TextureMap::iterator itr = textureMap.find(ptrBgImage);
     if(itr == textureMap.end())
     {
         LOG_WARN("Cannot find the texture of pre background image!\n");
         return false;
     }
-    glDeleteTextures(1, &textures[itr->second]);
-    textures[itr->second] = -1;
+    glDeleteTextures(1, &itr->second);
+    textureMap.erase(itr);
     
     return true;
 }
@@ -509,55 +504,46 @@ bool Render::enableTexture(CZImage* image)
         return false;
     }
     
-    map<CZImage*, short>::iterator itr = textureMap.find(image);
+    TextureMap::iterator itr = textureMap.find(image);
     
-    static short texNum = 0;
-    short texInd;
     if(itr == textureMap.end())
     {
-        texInd = texNum ++;
-        
-        if(texInd >= 128)
-        {
-            LOG_ERROR("texture resources exceed!\n");
-            return false;
-        }
+        pair<TextureMap::iterator, bool> result = textureMap.insert(make_pair(image, -1));
+        if(result.second) itr = result.first;
         else
         {
-            //generate an OpenGL texture ID for this texture
-            glGenTextures(1, &textures[texInd]);
-            //bind to the new texture ID
-            glBindTexture(GL_TEXTURE_2D, textures[texInd]);
-            //store the texture data for OpenGL use
-            if (image->colorSpace == CZImage::RGBA) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
-            }
-            else if (image->colorSpace == CZImage::RGB) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
-            }
-            else if (image->colorSpace == CZImage::GRAY) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)image->width , (GLsizei)image->height,
-                             0, GL_LUMINANCE, GL_UNSIGNED_BYTE, image->data);
-            }
-            
-            //	gluBuild2DMipmaps(GL_TEXTURE_2D, components, width, height, texFormat, GL_UNSIGNED_BYTE, bits);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            CZCheckGLError();
-            textureMap[image] = texInd;
+            LOG_ERROR("Insert new texture failed!\n");
+            return false;
         }
-    }
-    else
-    {
-        texInd = itr->second;
+        
+        //generate an OpenGL texture ID for this texture
+        glGenTextures(1, &itr->second);
+        //bind to the new texture ID
+        glBindTexture(GL_TEXTURE_2D, itr->second);
+        //store the texture data for OpenGL use
+        if (image->colorSpace == CZImage::RGBA) {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)image->width , (GLsizei)image->height,
+                         0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
+        }
+        else if (image->colorSpace == CZImage::RGB) {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)image->width , (GLsizei)image->height,
+                         0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+        }
+        else if (image->colorSpace == CZImage::GRAY) {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)image->width , (GLsizei)image->height,
+                         0, GL_LUMINANCE, GL_UNSIGNED_BYTE, image->data);
+        }
+        
+        //	gluBuild2DMipmaps(GL_TEXTURE_2D, components, width, height, texFormat, GL_UNSIGNED_BYTE, bits);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        CZCheckGLError();
     }
     
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textures[texInd]);
+    glBindTexture(GL_TEXTURE_2D, itr->second);
     //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 #if !defined(__APPLE__)
     glEnable(GL_TEXTURE_2D);
