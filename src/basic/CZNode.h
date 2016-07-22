@@ -48,6 +48,7 @@ public:
     //// properties
     CZMat4 rotateMat, translateMat, scaleMat;
     CZNode *parentNode;
+    bool isVisible;
 
 protected:
     NodeType _type;

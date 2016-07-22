@@ -223,6 +223,7 @@ bool Render::draw(CZNode *pNode, CZMat4 &viewProjMat)
         return false;
     }
     
+    if(!pNode->isVisible) return true;
     bool result = false;
     
     // render children node

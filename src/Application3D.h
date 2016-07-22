@@ -5,8 +5,6 @@
 #include <map>
 #include "CZBasic.h"
 #include "CZObjFileParser.h"
-#include "CZShader.h"
-#include "CZMat4.h"
 #include "CZNode.h"
 #include "CZObjModel.h"
 #include "CZAnimaitonManager.hpp"
@@ -21,7 +19,8 @@ public:
 	~Application3D();
 
 	bool init(const char *glslDir, const char* sceneFilename = NULL);
-	bool loadObjModel(const char* filename, bool quickLoad = true);
+	bool loadObjModel(const char* nodeName, const char* filepath, bool quickLoad = true);
+    bool setNodeVisible(const char* nodeName, bool visible);
     bool clearObjModel();
 	bool setRenderBufferSize(int w, int h);
 	void frame();

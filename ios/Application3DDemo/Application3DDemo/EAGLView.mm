@@ -253,14 +253,17 @@
 {
     BOOL result = NO;
     modelPath = path;
-    
+    static int modelNum = 0;
+    char modeName[128];
+    sprintf(modeName, "ObjModel_%d",modelNum);
     if (context != nil)
     {
         [EAGLContext setCurrentContext:context];
     
-        result = app3d.loadObjModel([path UTF8String]);
+        result = app3d.loadObjModel(modeName,[path UTF8String]);
     }
     
+    modelNum ++;
     //[self drawFrame];
     
     modelLoaded = result;

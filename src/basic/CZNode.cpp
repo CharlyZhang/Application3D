@@ -13,6 +13,7 @@ namespace CZ3D {
 CZNode::CZNode(NodeType t /*= kEmpty*/): _type(t)
 {
     parentNode = nullptr;
+    isVisible = true;
 }
 
 CZNode::~CZNode()

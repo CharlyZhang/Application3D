@@ -83,35 +83,30 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 	return true;
 }
 
-#define DEBUG
-bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true */)
+bool Application3D::loadObjModel(const char* filename, const char* filepath, bool quickLoad /* = true */)
 {
 	CZObjModel *pModel = nullptr;
-
-#ifdef DEBUG
-    quickLoad = false;
-#endif
     
 	bool success = false;
-	string strFileName(filename);
-	string tempFileName = strFileName + ".b";
+	string strFilePath(filepath);
+	string tempFilePath = strFilePath + ".b";
 	if(documentDirectory)
 	{
-		size_t splitLoc = tempFileName.find_last_of('/');
-		size_t strLen = tempFileName.length();
-		string name = tempFileName.substr(splitLoc+1,strLen-splitLoc-1);
-		tempFileName = string(documentDirectory) + "/" + name;
+		size_t splitLoc = tempFilePath.find_last_of('/');
+		size_t strLen = tempFilePath.length();
+		string name = tempFilePath.substr(splitLoc+1,strLen-splitLoc-1);
+		tempFilePath = string(documentDirectory) + "/" + name;
 	}
 
     if(quickLoad)
-        pModel = ModelFactory::createObjModelFromTemp(tempFileName.c_str());
+        pModel = ModelFactory::createObjModelFromTemp(tempFilePath.c_str());
     
     if(pModel == nullptr)
 	{
-        pModel = ModelFactory::createObjModel(filename);
+        pModel = ModelFactory::createObjModel(filepath);
 		
 		if(pModel && quickLoad)
-            ObjLoader::saveToTemp(pModel,tempFileName);
+            ObjLoader::saveToTemp(pModel,tempFilePath);
 	}
     
     if(pModel == nullptr)
@@ -120,6 +115,7 @@ bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true 
         return false;
     }
 
+    string strFileName(filename);
     rootNode.addSubNode(strFileName, pModel);
 
 	reset();
@@ -128,6 +124,28 @@ bool Application3D::loadObjModel(const char* filename, bool quickLoad /* = true 
 	return true;
 }
 
+bool Application3D::setNodeVisible(const char* nodeName, bool visible)
+{
+    if(nodeName == nullptr)
+    {
+        LOG_ERROR("nodeName is nullptr!\n");
+        return false;
+    }
+    
+    string strNodeName(nodeName);
+    CZNode *pNode = rootNode.getNode(strNodeName);
+    
+    if(pNode == nullptr)
+    {
+        LOG_ERROR("node(%s) doesnot exist!\n",nodeName);
+        return false;
+    }
+    
+    pNode->isVisible = visible;
+    
+    return true;
+}
+    
 bool Application3D::clearObjModel()
 {
     return rootNode.removeAllSubNodesOfType(CZNode::kObjModel);
