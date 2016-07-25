@@ -135,7 +135,6 @@ CZImage *CZLoadTexture(const string &filename)
     FREE_IMAGE_TYPE type = FreeImage_GetImageType(dib);
     FREE_IMAGE_COLOR_TYPE colorType = FreeImage_GetColorType(dib);
     
-    // TO DO: inverse pixel data sequence manually
     GLint components;
     CZImage::ColorSpace czColorSpace;
     switch (colorType)
@@ -158,6 +157,8 @@ CZImage *CZLoadTexture(const string &filename)
     CZImage *retImage = new CZImage((int)width,(int)height,czColorSpace);
     //memcpy(retImage->data,bits,width*height*components*sizeof(unsigned char));
     
+    
+    // inverse pixel data sequence manually
     unsigned char *dst = retImage->data;
     for (unsigned int i=0; i<height*width; i++)
     {

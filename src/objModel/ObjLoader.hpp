@@ -10,7 +10,7 @@
 #define ObjLoader_hpp
 
 #include "CZObjFileParser.h"
-#include "CZObjModel.h"
+#include "Model.hpp"
 
 #include <string>
 
@@ -19,10 +19,10 @@ namespace CZ3D {
 class ObjLoader : public CZObjFileParser
 {
 public:
-    static bool load(CZObjModel *objModel, std::string &path);
-    static bool loadFromTemp(CZObjModel *objModel, std::string &path);
+    static bool load(Model *objModel, std::string &path);
+    static bool loadFromTemp(Model *objModel, std::string &path);
     
-    static bool saveToTemp(CZObjModel *objModel, const std::string& path);
+    static bool saveToTemp(Model *objModel, const std::string& path);
     
     ObjLoader()
     {
@@ -40,7 +40,7 @@ private:
     void parseFace(std::ifstream &ifs);				//f <v/vt/vn <v/vt/vn> <v/vt/vn>
     
     static CZGeometry *pCurGeometry;
-    static CZObjModel *pCurModel;
+    static Model *pCurModel;
     static ObjLoader objLoader;                     
 };
     

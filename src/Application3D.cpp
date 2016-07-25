@@ -85,7 +85,7 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 
 bool Application3D::loadObjModel(const char* filename, const char* filepath, bool quickLoad /* = true */)
 {
-	CZObjModel *pModel = nullptr;
+	Model *pModel = nullptr;
     
 	bool success = false;
 	string strFilePath(filepath);

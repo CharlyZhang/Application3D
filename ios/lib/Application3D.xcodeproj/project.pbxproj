@@ -32,7 +32,6 @@
 		2D525C831D265239006B22FE /* CZMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6A1D265239006B22FE /* CZMaterial.cpp */; };
 		2D525C841D265239006B22FE /* CZMaterialLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6C1D265239006B22FE /* CZMaterialLib.cpp */; };
 		2D525C851D265239006B22FE /* CZObjFileParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */; };
-		2D525C861D265239006B22FE /* CZObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C701D265239006B22FE /* CZObjModel.cpp */; };
 		2D525C871D265239006B22FE /* CZCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C731D265239006B22FE /* CZCube.cpp */; };
 		2D525C881D265239006B22FE /* Application3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C761D265239006B22FE /* Application3D.cpp */; };
 		2D525C891D265239006B22FE /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D525C791D265239006B22FE /* UIImage+Resize.m */; };
@@ -55,13 +54,13 @@
 		2D525CAD1D2653E7006B22FE /* CZMaterial.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6B1D265239006B22FE /* CZMaterial.h */; };
 		2D525CAE1D2653E7006B22FE /* CZMaterialLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6D1D265239006B22FE /* CZMaterialLib.h */; };
 		2D525CAF1D2653E7006B22FE /* CZObjFileParser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C6F1D265239006B22FE /* CZObjFileParser.h */; };
-		2D525CB01D2653E7006B22FE /* CZObjModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C711D265239006B22FE /* CZObjModel.h */; };
 		2D525CB11D2653E7006B22FE /* CZShape.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C751D265239006B22FE /* CZShape.h */; };
 		2D525CB21D2653E7006B22FE /* UIImage+Resize.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D525C781D265239006B22FE /* UIImage+Resize.h */; };
 		2DA38F3D1D2F75160044AE42 /* ModelFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */; };
 		2DA38F401D2F7F120044AE42 /* ObjModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */; };
 		2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */; };
 		2DCF47361D38E726005226C9 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF47341D38E726005226C9 /* Render.cpp */; };
+		2DCF48951D4602F7005226C9 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF48931D4602F7005226C9 /* Model.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,7 +85,6 @@
 				2D525CAD1D2653E7006B22FE /* CZMaterial.h in CopyFiles */,
 				2D525CAE1D2653E7006B22FE /* CZMaterialLib.h in CopyFiles */,
 				2D525CAF1D2653E7006B22FE /* CZObjFileParser.h in CopyFiles */,
-				2D525CB01D2653E7006B22FE /* CZObjModel.h in CopyFiles */,
 				2D525CB11D2653E7006B22FE /* CZShape.h in CopyFiles */,
 				2D525CB21D2653E7006B22FE /* UIImage+Resize.h in CopyFiles */,
 			);
@@ -121,8 +119,6 @@
 		2D525C6D1D265239006B22FE /* CZMaterialLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZMaterialLib.h; sourceTree = "<group>"; };
 		2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZObjFileParser.cpp; sourceTree = "<group>"; };
 		2D525C6F1D265239006B22FE /* CZObjFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZObjFileParser.h; sourceTree = "<group>"; };
-		2D525C701D265239006B22FE /* CZObjModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZObjModel.cpp; sourceTree = "<group>"; };
-		2D525C711D265239006B22FE /* CZObjModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZObjModel.h; sourceTree = "<group>"; };
 		2D525C731D265239006B22FE /* CZCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CZCube.cpp; sourceTree = "<group>"; };
 		2D525C741D265239006B22FE /* CZCube.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CZCube.hpp; sourceTree = "<group>"; };
 		2D525C751D265239006B22FE /* CZShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZShape.h; sourceTree = "<group>"; };
@@ -145,6 +141,8 @@
 		2DCF47341D38E726005226C9 /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
 		2DCF47351D38E726005226C9 /* Render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
 		2DCF481A1D3F7D65005226C9 /* GLDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDef.h; sourceTree = "<group>"; };
+		2DCF48931D4602F7005226C9 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		2DCF48941D4602F7005226C9 /* Model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,14 +256,14 @@
 				2D525C6D1D265239006B22FE /* CZMaterialLib.h */,
 				2D525C6E1D265239006B22FE /* CZObjFileParser.cpp */,
 				2D525C6F1D265239006B22FE /* CZObjFileParser.h */,
-				2D525C701D265239006B22FE /* CZObjModel.cpp */,
-				2D525C711D265239006B22FE /* CZObjModel.h */,
 				2DA38F3B1D2F75160044AE42 /* ModelFactory.cpp */,
 				2DA38F3C1D2F75160044AE42 /* ModelFactory.hpp */,
 				2DA38F3E1D2F7F120044AE42 /* ObjModel.cpp */,
 				2DA38F3F1D2F7F120044AE42 /* ObjModel.hpp */,
 				2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */,
 				2DA38F421D2FA2A30044AE42 /* ObjLoader.hpp */,
+				2DCF48931D4602F7005226C9 /* Model.cpp */,
+				2DCF48941D4602F7005226C9 /* Model.hpp */,
 			);
 			name = objModel;
 			path = ../../src/objModel;
@@ -407,8 +405,8 @@
 				2DCF47361D38E726005226C9 /* Render.cpp in Sources */,
 				2D525C801D265239006B22FE /* CZShader.cpp in Sources */,
 				2D525C881D265239006B22FE /* Application3D.cpp in Sources */,
-				2D525C861D265239006B22FE /* CZObjModel.cpp in Sources */,
 				2D525C7B1D265239006B22FE /* CZAnimation.cpp in Sources */,
+				2DCF48951D4602F7005226C9 /* Model.cpp in Sources */,
 				2D525C871D265239006B22FE /* CZCube.cpp in Sources */,
 				2D525C7C1D265239006B22FE /* CZShapeAnimation.cpp in Sources */,
 				2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */,

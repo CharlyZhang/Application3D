@@ -2,11 +2,6 @@
 #ifndef _CZDEFINE_H_
 #define _CZDEFINE_H_
 
-//
-//#include "CZFbo.h"
-//#include "CZShader.h"
-//#include "CZTexture.h"
-
 #define DEFAULT_GLSL_DIR "../../src/glsl/"
 #ifndef _DEBUG
 	#define _DEBUG

@@ -11,13 +11,13 @@
 
 namespace CZ3D {
     
-class CZObjModel;
+class Model;
 
 class ModelFactory
 {
 public:
-    static CZObjModel* createObjModel(const char* filename);
-    static CZObjModel* createObjModelFromTemp(const char* filename);
+    static Model* createObjModel(const char* filename);
+    static Model* createObjModelFromTemp(const char* filename);
 };
 
 }

@@ -16,10 +16,10 @@ using namespace std;
 namespace CZ3D {
     
 CZGeometry* ObjLoader::pCurGeometry = nullptr;
-CZObjModel* ObjLoader::pCurModel = nullptr;
+Model* ObjLoader::pCurModel = nullptr;
 ObjLoader ObjLoader::objLoader;                     //< 里
 
-bool ObjLoader::load(CZObjModel *objModel, std::string &path)
+bool ObjLoader::load(Model *objModel, std::string &path)
 {
     if (objModel == nullptr)
     {
@@ -33,7 +33,7 @@ bool ObjLoader::load(CZObjModel *objModel, std::string &path)
     return objLoader.parseFile(path);
 }
 
-bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
+bool ObjLoader::loadFromTemp(Model *objModel, std::string &path)
 {
     if (objModel == nullptr)
     {
@@ -148,7 +148,7 @@ bool ObjLoader::loadFromTemp(CZObjModel *objModel, std::string &path)
     return true;
 }
 
-bool ObjLoader::saveToTemp(CZObjModel *objModel, const string& path)
+bool ObjLoader::saveToTemp(Model *objModel, const string& path)
 {
     if (objModel == nullptr)
     {

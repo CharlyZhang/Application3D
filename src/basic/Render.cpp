@@ -9,7 +9,7 @@
 #include "Render.hpp"
 #include "CZDefine.h"
 #include "../basic/CZShader.h"
-#include "../objModel/CZObjModel.h"
+#include "../objModel/Model.hpp"
 #include "../shape/CZCube.hpp"
 #include <vector>
 
@@ -256,7 +256,7 @@ bool Render::drawObjModel(CZNode *pNode, CZMat4 &viewProjMat)
     
     CZMat4 modelMat = pNode->getTransformMat();
     
-    CZObjModel *pCurNode = dynamic_cast<CZObjModel*>(pNode);
+    Model *pCurNode = dynamic_cast<Model*>(pNode);
     if(pCurNode == nullptr)
     {
         LOG_ERROR("dynamic cast failed!\n");
@@ -457,7 +457,7 @@ CZShader* Render::getShader(ShaderType type)
 
 RenderResource* Render::prepareObjNodeVAO(CZNode *pNode)
 {
-    CZObjModel *pObjModel = dynamic_cast<CZObjModel*>(pNode);
+    Model *pObjModel = dynamic_cast<Model*>(pNode);
     
     if(pObjModel == nullptr) return nullptr;
     

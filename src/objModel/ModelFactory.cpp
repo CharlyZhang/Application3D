@@ -16,7 +16,7 @@ using namespace std;
 
 namespace CZ3D {
     
-CZObjModel* ModelFactory::createObjModel(const char* filename)
+Model* ModelFactory::createObjModel(const char* filename)
 {
     if(filename == NULL)
     {
@@ -24,7 +24,7 @@ CZObjModel* ModelFactory::createObjModel(const char* filename)
         return nullptr;
     }
     
-    CZObjModel *pModel = new CZObjModel;
+    Model *pModel = new Model;
     
     bool success = false;
     string strFileName(filename);
@@ -35,7 +35,7 @@ CZObjModel* ModelFactory::createObjModel(const char* filename)
     return nullptr;
 }
 
-CZObjModel* ModelFactory::createObjModelFromTemp(const char* filename)
+Model* ModelFactory::createObjModelFromTemp(const char* filename)
 {
     if(filename == NULL)
     {
@@ -43,7 +43,7 @@ CZObjModel* ModelFactory::createObjModelFromTemp(const char* filename)
         return nullptr;
     }
     
-    CZObjModel *pModel = new CZObjModel;
+    Model *pModel = new Model;
     
     bool success = false;
     string strFileName(filename);
