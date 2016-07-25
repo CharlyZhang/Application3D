@@ -65,8 +65,16 @@ Render::~Render()
     if(pBgImageRes) delete pBgImageRes;
 }
    
-bool Render::init()
+bool Render::init(const char* glslDir)
 {
+    if (glslDir == NULL)
+    {
+        LOG_ERROR("glslDir is NULL\n");
+        return false ;
+    }
+    
+    CZShader::glslDirectory = string(glslDir);
+    
 # ifdef _WIN32
     /// OpenGL initialization
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -436,18 +444,7 @@ void Render::setSize(int w, int h)
 # endif
 
 }
-    
-void Render::setGLSLDirectory(const char* glslDir)
-{
-    if (glslDir == NULL)
-    {
-        LOG_WARN("glslDir is NULL\n");
-        return;
-    }
-    
-    CZShader::glslDirectory = string(glslDir);
-}
-    
+   
 CZShader* Render::getShader(ShaderType type)
 {
     ShaderMap::iterator itr = shaders.find(type);

@@ -1,11 +1,11 @@
 #include "Application3D.h"
 #include "CZDefine.h"
-#include "CZGeometry.h"
 #include "shape/CZShape.h"
 #include "shape/CZCube.hpp"
 #include "ModelFactory.hpp"
-#include "ObjLoader.hpp"
+#include "objModel/ObjLoader.hpp"
 #include "SceneLoader.hpp"
+#include "Render.hpp"
 
 #include "CZLog.h"
 #include <ctime>
@@ -32,6 +32,7 @@ Application3D::Application3D()
 	documentDirectory = nullptr;
     backgroundImage = nullptr;
     sceneFilePath = nullptr;
+    pRender = nullptr;
 }
 
 Application3D::~Application3D()
@@ -49,21 +50,20 @@ Application3D::~Application3D()
         backgroundImage = nullptr;
     }
     if(sceneFilePath) delete [] sceneFilePath;
+    freeGraphicResources();
 }
 
 bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL */ )
 {
 
-#if	defined(__APPLE__)	|| defined(_WIN32)
-    if(glslDir == nullptr)
+    delete pRender;
+    pRender = new Render;
+
+    if(!pRender->init(glslDir))
     {
-        LOG_ERROR("glslDir is nullptr!\n");
+        delete pRender;
         return false;
     }
-    render.setGLSLDirectory(glslDir);
-#endif
-
-    render.init();
     
 	/// config scene
     SceneLoader sceneLoader;
@@ -164,7 +164,7 @@ bool Application3D::clearObjModel()
 
 bool Application3D::setRenderBufferSize(int w, int h)
 {
-    render.setSize(w, h);
+    if(pRender) pRender->setSize(w, h);
 	return true;
 }
 
@@ -173,18 +173,23 @@ void Application3D::frame()
     clock_t nowTime = clock();
     animationManager.update(nowTime);
     
+    if(!pRender)
+    {
+        LOG_ERROR("pRender is nullptr!");
+        return;
+    }
 #ifdef SHOW_RENDER_TIME
 	static clock_t start, finish;
 	start = clock();
 #endif
 
     if(backgroundImage)
-        render.blitBackground(backgroundImage,true);
+        pRender->blitBackground(backgroundImage,true);
     
     if(backgroundImage)
-        render.frame(scene,&rootNode,false);
+        pRender->frame(scene,&rootNode,false);
     else
-        render.frame(scene, &rootNode, true);
+        pRender->frame(scene, &rootNode, true);
 
 #ifdef SHOW_RENDER_TIME
 	finish = clock();
@@ -222,6 +227,12 @@ void Application3D::reset()
     sceneLoader.load(&scene, sceneFilePath);
 }
 
+void Application3D::freeGraphicResources()
+{
+    delete pRender;
+    pRender = nullptr;
+}
+    
 #ifdef	__ANDROID__
 bool Application3D::createShader(ShaderType type,const char* vertFile, const char* fragFile,std::vector<std::string> &attributes,std::vector<std::string> &uniforms)
 {

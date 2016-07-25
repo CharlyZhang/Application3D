@@ -2,12 +2,14 @@
 #define _CZAPPLICATION3D_H_
 
 #include <string>
+#include <vector>
 #include "CZBasic.h"
 #include "CZNode.h"
 #include "CZAnimaitonManager.hpp"
-#include "Render.hpp"
 
 namespace CZ3D {
+
+class Render;
     
 class Application3D 
 {
@@ -22,6 +24,7 @@ public:
 	bool setRenderBufferSize(int w, int h);
 	void frame();
 	void reset();
+    void freeGraphicResources();
     
     // shape
     bool createShape(const char* shapeFileName, bool contentInParam = false);
@@ -61,7 +64,7 @@ private:
 	CZScene scene;
     CZNode rootNode;
     CZAnimationManager animationManager;
-    CZ3D::Render render;
+    Render *pRender;
     CZImage *backgroundImage;
     char *documentDirectory;                          ///< to store the binary data of model
     char *sceneFilePath;                              ///< to store the scene file path

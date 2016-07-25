@@ -52,13 +52,12 @@ public:
     ~Render();
     friend class Application3D;
     
-    bool init();
+    bool init(const char* glslDir);
     bool blitBackground(CZImage *bgImg, bool clearColor = true);
     bool frame(CZScene &scene,CZNode *pNode, bool clearColor = false);
     
     bool setMode(RenderMode mode);
     void setSize(int w, int h);
-    void setGLSLDirectory(const char* glslDir);
     
 private:
     bool draw(CZNode *pNode, CZMat4 &viewProjMat);
