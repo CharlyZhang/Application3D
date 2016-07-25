@@ -2,17 +2,14 @@
 #define _CZAPPLICATION3D_H_
 
 #include <string>
-#include <map>
 #include "CZBasic.h"
-#include "CZObjFileParser.h"
 #include "CZNode.h"
-#include "CZObjModel.h"
 #include "CZAnimaitonManager.hpp"
 #include "Render.hpp"
 
 namespace CZ3D {
     
-class Application3D : private CZObjFileParser
+class Application3D 
 {
 public:
 	Application3D();
@@ -37,22 +34,20 @@ public:
     void setModelLoadCallBack(const char * cls, const char *method);
 #endif
     
-    // document directory
-    //  /note : default as the same of model's location;
-    //          should be set in ios platform to utilize binary data 
-    void setDocDirectory(const char* docDir);
-    
 	// control
 	//	/note : (deltaX,deltaY) is in the screen coordinate system
 	void rotate(float deltaX, float deltaY, const char *nodeName = nullptr);
 	void translate(float deltaX, float deltaY, const char *nodeName = nullptr);
 	void scale(float s, const char *nodeName = nullptr);
 
+    // document directory
+    //  /note : default as the same of model's location;
+    //          should be set in ios platform to utilize binary data
+    void setDocDirectory(const char* docDir);
+    
 	// custom config
 	void setBackgroundColor(float r, float g, float b, float a);
     void setBackgroundImage(CZImage *img);
-	void setModelColor(float r, float g, float b, float a);
-    
     // camera
     void setCameraPosition(float x, float y, float z);
     
@@ -61,19 +56,6 @@ public:
     void setLigthDirection(float x, float y, float z);
     void setAmbientColor(unsigned char r, unsigned char g, unsigned char b);
     void setDiffuseColor(unsigned char r, unsigned char g, unsigned char b);
-    
-    static bool enableTexture(CZImage* image);
-
-private:
-	void parseLine(std::ifstream& ifs, const std::string& ele_id) override;
-	void parseEyePosition(std::ifstream& ifs);
-    void parseCameraFov(std::ifstream& ifs);
-    void parseCameraNearPlane(std::ifstream& ifs);
-    void parseCameraFarPlane(std::ifstream& ifs);
-	void parsePointLight(std::ifstream& ifs);
-	void parseDirectionalLight(std::ifstream& ifs);
-	void parseBackgroundColor(std::ifstream& ifs);
-	void parseMainColor(std::ifstream& ifs);
 
 private:
 	CZScene scene;
@@ -82,6 +64,7 @@ private:
     CZ3D::Render render;
     CZImage *backgroundImage;
     char *documentDirectory;                          ///< to store the binary data of model
+    char *sceneFilePath;                              ///< to store the scene file path
 };
 
 }

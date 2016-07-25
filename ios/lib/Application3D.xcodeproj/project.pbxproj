@@ -61,6 +61,7 @@
 		2DA38F431D2FA2A30044AE42 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DA38F411D2FA2A30044AE42 /* ObjLoader.cpp */; };
 		2DCF47361D38E726005226C9 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF47341D38E726005226C9 /* Render.cpp */; };
 		2DCF48951D4602F7005226C9 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF48931D4602F7005226C9 /* Model.cpp */; };
+		2DCF48981D4608F0005226C9 /* SceneLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF48961D4608F0005226C9 /* SceneLoader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -143,6 +144,8 @@
 		2DCF481A1D3F7D65005226C9 /* GLDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDef.h; sourceTree = "<group>"; };
 		2DCF48931D4602F7005226C9 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		2DCF48941D4602F7005226C9 /* Model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
+		2DCF48961D4608F0005226C9 /* SceneLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SceneLoader.cpp; path = ../../src/basic/SceneLoader.cpp; sourceTree = "<group>"; };
+		2DCF48971D4608F0005226C9 /* SceneLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SceneLoader.hpp; path = ../../src/basic/SceneLoader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +202,8 @@
 			children = (
 				2D525C761D265239006B22FE /* Application3D.cpp */,
 				2D525C771D265239006B22FE /* Application3D.h */,
+				2DCF48961D4608F0005226C9 /* SceneLoader.cpp */,
+				2DCF48971D4608F0005226C9 /* SceneLoader.hpp */,
 				2D525C531D265239006B22FE /* animation */,
 				2D525C5A1D265239006B22FE /* basic */,
 				2D525C691D265239006B22FE /* objModel */,
@@ -417,6 +422,7 @@
 				2D525C841D265239006B22FE /* CZMaterialLib.cpp in Sources */,
 				2DA38F401D2F7F120044AE42 /* ObjModel.cpp in Sources */,
 				2D525C851D265239006B22FE /* CZObjFileParser.cpp in Sources */,
+				2DCF48981D4608F0005226C9 /* SceneLoader.cpp in Sources */,
 				2D525C7E1D265239006B22FE /* CZMat4.cpp in Sources */,
 				2D525C831D265239006B22FE /* CZMaterial.cpp in Sources */,
 			);

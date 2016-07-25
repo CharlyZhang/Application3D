@@ -5,10 +5,11 @@
 #include "shape/CZCube.hpp"
 #include "ModelFactory.hpp"
 #include "ObjLoader.hpp"
+#include "SceneLoader.hpp"
+
 #include "CZLog.h"
 #include <ctime>
-#include <vector>
-#include <string>
+
 
 #define CONFIG_FILE_PATH	"./scene.cfg"
 
@@ -28,8 +29,9 @@ char* ModelLoadCallerMethod = nullptr;
 
 Application3D::Application3D()
 {
-	documentDirectory = NULL;
-    backgroundImage = NULL;
+	documentDirectory = nullptr;
+    backgroundImage = nullptr;
+    sceneFilePath = nullptr;
 }
 
 Application3D::~Application3D()
@@ -44,8 +46,9 @@ Application3D::~Application3D()
 	if(documentDirectory)   delete [] documentDirectory;
     if (backgroundImage) {
         delete backgroundImage;
-        backgroundImage = NULL;
+        backgroundImage = nullptr;
     }
+    if(sceneFilePath) delete [] sceneFilePath;
 }
 
 bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL */ )
@@ -63,7 +66,8 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
     render.init();
     
 	/// config scene
-	if(!parseFile(sceneFilename))
+    SceneLoader sceneLoader;
+	if(!sceneLoader.load(&scene,sceneFilename))
 	{
 		scene.eyePosition = CZPoint3D(0, 0, 100);
 		scene.cameraFov = 45.f;
@@ -71,15 +75,19 @@ bool Application3D::init(const char *glslDir,const char* sceneFilename /* = NULL
 		scene.camearFarPlane = 1000.f;
 		scene.light.position = CZPoint3D(0, 0, -120);
 		scene.light.intensity = CZPoint3D(1, 1, 1);
-		this->setAmbientColor(50*1.56, 50*1.56, 50*1.56);
-		this->setDiffuseColor(210,210,210);
-		scene.directionalLight.direction = CZPoint3D(-105.351, -86.679, -133.965);
-
+        scene.ambientLight.intensity = CZVector3D<float>(50*1.56 /255.f , 50*1.56 /255.f, 50*1.56 /255.f);
+        scene.directionalLight.intensity = CZVector3D<float>(210 /255.f , 210 /255.f, 210 /255.f);
 		//scene.directionalLight.direction = CZPoint3D(-105.351,-86.679,-133.965);
 		scene.bgColor = CZColor(0.8f, 0.8f, 0.9f, 1.f);
 		scene.mColor = CZColor(1.f, 1.f, 1.f, 1.f);
 	}
 
+    // reserve scene file path
+    size_t len = strlen(sceneFilename);
+    sceneFilePath = new char[len+1];
+    strcpy(sceneFilePath, sceneFilename);
+    sceneFilePath[len] = '\0';
+    
 	return true;
 }
 
@@ -207,8 +215,8 @@ void Application3D::reset()
 {
     rootNode.resetMatrix();
     
-	// TO DO:
-    // copy the initial scene
+    SceneLoader sceneLoader;
+    sceneLoader.load(&scene, sceneFilePath);
 }
 
 #ifdef	__ANDROID__
@@ -392,11 +400,6 @@ void Application3D::setBackgroundImage(CZImage *img)
 	backgroundImage = img;
 }
 
-void Application3D::setModelColor(float r, float g, float b, float a)
-{
-	scene.mColor = CZColor(r, g, b, a);
-}
-
 // camera
 void Application3D::setCameraPosition(float x, float y, float z)
 {
@@ -419,136 +422,6 @@ void Application3D::setAmbientColor(unsigned char r, unsigned char g, unsigned c
 void Application3D::setDiffuseColor(unsigned char r, unsigned char g, unsigned char b)
 {
 	scene.directionalLight.intensity = CZVector3D<float>(r/255.0f,g/255.0f,b/255.0f);
-}
-
-//////////////////////////////////////////////////////////////////////////
-void Application3D::parseLine(ifstream& ifs, const string& ele_id)
-{
-	float x,y,z;
-	int r,g,b;
-	if ("camera_position" == ele_id)
-		parseEyePosition(ifs);
-	else if ("camera_fov" == ele_id)
-		parseCameraFov(ifs);
-	else if ("camera_near_clip" == ele_id)
-		parseCameraNearPlane(ifs);
-	else if ("camera_far_clip" == ele_id)
-		parseCameraFarPlane(ifs);
-
-	else if ("pl" == ele_id)
-		parsePointLight(ifs);
-
-	else if ("dl" == ele_id)
-		parseDirectionalLight(ifs);
-	else if ("dl_direction" == ele_id)
-	{
-		ifs >> x >> y >> z;
-		setLigthDirection(-x, -z, y);
-	}
-	else if ("dl_color" == ele_id)
-	{
-		ifs >> r >> g >> b;
-		setDiffuseColor((unsigned char)r, (unsigned char)g, (unsigned char)b);
-	}
-	else if ("dl_intensity" == ele_id)
-	{
-		float intensity;
-		ifs >> intensity;
-		scene.directionalLight.intensity.x *= intensity;
-		scene.directionalLight.intensity.y *= intensity;
-		scene.directionalLight.intensity.z *= intensity;
-	}
-
-	else if ("al_color" == ele_id)
-	{
-		ifs >> r >> g >> b;
-		setAmbientColor((unsigned char)r, (unsigned char)g, (unsigned char)b);
-	}
-	else if ("al_intensity" == ele_id)
-	{
-		float intensity;
-		ifs >> intensity;
-		scene.ambientLight.intensity.x *= intensity;
-		scene.ambientLight.intensity.y *= intensity;
-		scene.ambientLight.intensity.z *= intensity;
-	}
-
-	else if ("background_color" == ele_id)
-		parseBackgroundColor(ifs);
-	else if ("render_color" == ele_id)
-		parseMainColor(ifs);
-	else
-		skipLine(ifs);
-}
-
-// \note
-// the coordinate (x,y,z) should be converted to (x,z,-y), for the 3dMax is diffrent
-void Application3D::parseEyePosition(ifstream& ifs)
-{
-	float x, y, z;
-	ifs >> x >> y >> z;
-	scene.eyePosition = CZPoint3D(x,z,-y);
-}
-
-void Application3D::parseCameraFov(ifstream& ifs)
-{
-	ifs >> scene.cameraFov;
-}
-
-void Application3D::parseCameraNearPlane(ifstream& ifs)
-{
-	ifs >> scene.cameraNearPlane;
-}
-
-void Application3D::parseCameraFarPlane(ifstream& ifs)
-{
-	ifs >> scene.camearFarPlane;
-}
-
-void Application3D::parsePointLight(ifstream& ifs)
-{
-	float intensity;
-	ifs >> scene.light.position.x
-		>> scene.light.position.y
-		>> scene.light.position.z
-		>> scene.light.intensity.x
-		>> scene.light.intensity.y
-		>> scene.light.intensity.z
-		>> intensity;
-	scene.light.intensity.x *= intensity;
-	scene.light.intensity.y *= intensity;
-	scene.light.intensity.z *= intensity;
-}
-
-void Application3D::parseDirectionalLight(ifstream& ifs)
-{
-	float intensity;
-	ifs >> scene.directionalLight.direction.x
-		>> scene.directionalLight.direction.y
-		>> scene.directionalLight.direction.z
-		>> scene.directionalLight.intensity.x
-		>> scene.directionalLight.intensity.y
-		>> scene.directionalLight.intensity.z
-		>> intensity;
-	scene.directionalLight.intensity.x *= intensity;
-	scene.directionalLight.intensity.y *= intensity;
-	scene.directionalLight.intensity.z *= intensity;
-}
-
-void Application3D::parseBackgroundColor(ifstream& ifs)
-{
-	ifs >> scene.bgColor.r
-		>> scene.bgColor.g
-		>> scene.bgColor.b
-		>> scene.bgColor.a;
-}
-
-void Application3D::parseMainColor(ifstream& ifs)
-{
-	ifs >> scene.mColor.r
-		>> scene.mColor.g
-		>> scene.mColor.b
-		>> scene.mColor.a;
 }
 
 }
