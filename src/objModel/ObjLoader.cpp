@@ -14,11 +14,7 @@
 using namespace std;
 
 namespace CZ3D {
-    
-CZGeometry* ObjLoader::pCurGeometry = nullptr;
-Model* ObjLoader::pCurModel = nullptr;
-ObjLoader ObjLoader::objLoader;                     //< 里
-
+                       //< 里
 bool ObjLoader::load(Model *objModel, std::string &path)
 {
     if (objModel == nullptr)
@@ -30,7 +26,7 @@ bool ObjLoader::load(Model *objModel, std::string &path)
     pCurGeometry = nullptr;
     pCurModel = objModel;
     
-    return objLoader.parseFile(path);
+    return parseFile(path);
 }
 
 bool ObjLoader::loadFromTemp(Model *objModel, std::string &path)

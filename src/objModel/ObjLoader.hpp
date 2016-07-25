@@ -19,15 +19,11 @@ namespace CZ3D {
 class ObjLoader : public CZObjFileParser
 {
 public:
-    static bool load(Model *objModel, std::string &path);
-    static bool loadFromTemp(Model *objModel, std::string &path);
+    bool load(Model *objModel, std::string &path);
+    bool loadFromTemp(Model *objModel, std::string &path);
     
-    static bool saveToTemp(Model *objModel, const std::string& path);
+    bool saveToTemp(Model *objModel, const std::string& path);
     
-    ObjLoader()
-    {
-        LOG_DEBUG("constructing ObjLoader!\n");
-    }
     bool parseFile(const std::string& path) override;
     
 private:
@@ -39,9 +35,8 @@ private:
     void parseVertexTexCoord(std::ifstream &ifs);	//vt <u> <v>
     void parseFace(std::ifstream &ifs);				//f <v/vt/vn <v/vt/vn> <v/vt/vn>
     
-    static CZGeometry *pCurGeometry;
-    static Model *pCurModel;
-    static ObjLoader objLoader;                     
+    CZGeometry *pCurGeometry;
+    Model *pCurModel;
 };
     
 }

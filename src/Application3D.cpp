@@ -114,7 +114,10 @@ bool Application3D::loadObjModel(const char* filename, const char* filepath, boo
         pModel = ModelFactory::createObjModel(filepath);
 		
 		if(pModel && quickLoad)
-            ObjLoader::saveToTemp(pModel,tempFilePath);
+        {
+            ObjLoader objLoader;
+            objLoader.saveToTemp(pModel,tempFilePath);
+        }
 	}
     
     if(pModel == nullptr)

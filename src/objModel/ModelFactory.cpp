@@ -28,7 +28,8 @@ Model* ModelFactory::createObjModel(const char* filename)
     
     bool success = false;
     string strFileName(filename);
-    success = ObjLoader::load(pModel, strFileName);
+    ObjLoader objLoader;
+    success = objLoader.load(pModel, strFileName);
     if(success) return pModel;
     
     delete pModel;
@@ -47,7 +48,8 @@ Model* ModelFactory::createObjModelFromTemp(const char* filename)
     
     bool success = false;
     string strFileName(filename);
-    success = ObjLoader::loadFromTemp(pModel, strFileName);
+    ObjLoader objLoader;
+    success = objLoader.loadFromTemp(pModel, strFileName);
     if(success) return pModel;
     
     delete pModel;
