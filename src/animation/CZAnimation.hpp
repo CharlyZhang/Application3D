@@ -9,7 +9,7 @@
 #ifndef CZAnimation_hpp
 #define CZAnimation_hpp
 
-#include "../basic/CZDefine.h"
+#include "CZDefine.h"
 #include <string>
 
 namespace NAMESPACE {

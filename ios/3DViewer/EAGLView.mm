@@ -25,7 +25,7 @@
 
 @implementation EAGLView
 {
-    Application3D app3d;
+    CZ3D::Application3D app3d;
     NSString *modelPath;
     BOOL modelLoaded;
 }
@@ -62,7 +62,7 @@
         return nil;
     }
     
-    NSString *configPath = [[[NSBundle mainBundle]bundlePath]stringByAppendingString:@"Application3DResources.bundle/scene_violin.cfg"];
+    NSString *configPath = [[[NSBundle mainBundle]bundlePath]stringByAppendingString:@"/Application3DResources.bundle/scene_violin.cfg"];
 
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
@@ -254,11 +254,13 @@
     BOOL result = NO;
     modelPath = path;
     
+    static int modelNum = 0;
     if (context != nil)
     {
         [EAGLContext setCurrentContext:context];
-    
-        result = app3d.loadObjModel([path UTF8String]);
+        char nodeName[128];
+        sprintf(nodeName, "objModel_%d",modelNum++);
+        result = app3d.loadObjModel(nodeName,[path UTF8String]);
     }
     
     //[self drawFrame];

@@ -253,7 +253,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
+			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				};
 			name = Debug;
 		};
 		2D525CE01D2661BD006B22FE /* Release */ = {
@@ -312,7 +313,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.founder.Application3DDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "996d68d1-7df3-411e-93da-d9d99561950b";
-			};
+			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				};
 			name = Debug;
 		};
 		2D525CE31D2661BD006B22FE /* Release */ = {
