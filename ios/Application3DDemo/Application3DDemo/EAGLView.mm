@@ -28,6 +28,7 @@
     CZ3D::Application3D app3d;
     NSString *modelPath;
     BOOL modelLoaded;
+    BOOL renderBufferReady;
 }
 
 @synthesize context;
@@ -79,6 +80,7 @@
 #endif
     
     modelLoaded = NO;
+    renderBufferReady = NO;
     
     return self;
 }// We have to implement this method
@@ -144,6 +146,8 @@
         NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
         return ;
     }
+    
+    renderBufferReady = YES;
 }
 
 //deleting the framebuffer and all the buffers it contains
@@ -165,12 +169,15 @@
         depthRenderbuffer = 0;
         msaaDepthbuffer = 0;
     }
+    
+    renderBufferReady = NO;
 }
 
 
 //this is where all the magic happens!
 - (void)drawFrame
 {
+    if (!renderBufferReady) return;
     //we need a context for rendering
     if (context != nil)
     {
