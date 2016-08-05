@@ -457,6 +457,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -467,8 +468,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				};
+			};
 			name = Debug;
 		};
 		2D525C4D1D2651B2006B22FE /* Release */ = {
@@ -512,13 +512,13 @@
 		2D525C4F1D2651B2006B22FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				};
+			};
 			name = Debug;
 		};
 		2D525C501D2651B2006B22FE /* Release */ = {
@@ -536,6 +536,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Application3DResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -545,8 +546,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = bundle;
-			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				};
+			};
 			name = Debug;
 		};
 		2D525C931D2652C3006B22FE /* Release */ = {
@@ -569,9 +569,9 @@
 		2D525C9E1D265368006B22FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				};
+			};
 			name = Debug;
 		};
 		2D525C9F1D265368006B22FE /* Release */ = {

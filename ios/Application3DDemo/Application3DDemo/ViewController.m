@@ -10,6 +10,9 @@
 #import "EAGLView.h"
 #include "MBProgressHUD/MBProgressHUD.h"
 
+#define MAS_SHORTHAND
+#import "Masonry.h"
+
 #define MODEL_FROM_BUNDLE 1
 #define MULTI_MODELS_FROM_BUNDLE 0
 
@@ -67,7 +70,7 @@
 }
 
 - (BOOL) shouldAutorotate {
-    return NO;
+    return YES;
 }
 
 - (void)cleanTemp
@@ -141,7 +144,10 @@
     [self.view insertSubview:glView atIndex:0];
     [self createGuesturesForView:glView];
     
-    
+    __weak ViewController *weakSelf = self;
+    [glView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
     
     hud = [[MBProgressHUD alloc] initWithView:self.view];
     hud.delegate = self;
